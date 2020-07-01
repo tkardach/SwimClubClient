@@ -1,10 +1,18 @@
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://apis.google.com/js/api.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<html>
+  <head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  </head>
   <body>
     <style>
+      
+      body {
+        margin: 5%;
+      }
+
       #datep {
         display: none;
       }
@@ -20,9 +28,9 @@
       #addon{background-color:#999; width:100%}
 
       .reservation-div {
-        width: 100%;
         display: inline-block;
         text-align: center;
+        width: 100%;
       }
 
       #timeslots {
@@ -39,18 +47,42 @@
         margin: 0 auto;
       }
 
-      .ui-datepicker {
-        font-size: 150%;
+      @media screen and (min-width: 500px) {
+        .ui-datepicker {
+          font-size: 75%;
+        }
+      }
+      
+      @media screen and (min-width: 700px) {
+        .ui-datepicker {
+          font-size: 200%;
+        }
       }
 
       h1 {
         font-family: Arial, Helvetica, sans-serif;
-        font-size: 24px;
+        font-size: 4vw;
+      }
+
+      h2 {
+        font-size: 3vw!important;
       }
 
       p {
         font-family: Arial, Helvetica, sans-serif;
-        font-size: 18px;
+        font-size: 2vw;
+      }
+
+      .scaled-button {
+        font-size: 2vw;
+      }
+
+      .medium-font {
+        font-size: 2vw!important;
+      }
+
+      .large-font {
+        font-size: 3vw!important;
       }
 
       .timeslot {
@@ -86,10 +118,6 @@
         background-color: rgb(228, 228, 228); 
       }
 
-      .google-sheet {
-        width: 100%; 
-      }
-
       /* The Modal (background) */
       .modal {
         display: none; /* Hidden by default */
@@ -108,16 +136,16 @@
       .modal-content {
         clear: both;
         background-color: #fefefe;
-        margin: 15% auto; /* 15% from the top and centered */
-        padding: 20px;
         border: 1px solid #888;
+        padding: 20px;
+        margin: 20% auto; /* 15% from the top and centered */
         width: 80%; /* Could be more or less, depending on screen size */
       }
 
       /* The Close Button */
       .close {
         color: #aaa;
-        float: right;
+        margin-left: auto;
         font-size: 28px;
         font-weight: bold;
       }
@@ -128,10 +156,20 @@
         text-decoration: none;
         cursor: pointer;
       }
+
+      #credentialContainer {
+        width: 200px;
+      }
+
       #credentialContainer span {
-        display:inline-block
+        margin: 15px;
+      }
+      
+      #credentialContainer a {
+        margin: 15px;
       }
       .fake-link {
+        font-size: 2vw;
         color: rgb(0, 98, 190);
         text-decoration: underline;
         cursor: pointer;
@@ -151,12 +189,16 @@
       }
     </style>
     <script>
-      const API_URL = "http://localhost:9507/api/";
+      // Constants
+      const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const API_URL = "https://api.saratogaswimclub.com/api/";
       const CALENDAR_API = API_URL + "reservations/";
       const USER_API = API_URL + "users/";
 
+      // Variables
       var sessionExists;
       var selectedDate;
+      var startTime, endTime;
 
       // Request Methods
 
@@ -356,7 +398,6 @@
       }
 
       // Utility Methods
-
       function disableAllTimeSlots() {
         $("#11to1230").prop("disabled", true);
         $("#1to230").prop("disabled", true);
@@ -376,6 +417,7 @@
       function hideAllTimeSlots() {
         document.getElementById("timeslots").style.display = "none";
       }
+
       function showAllTimeslots() {
         document.getElementById("timeslots").style.display = "block";
       }
@@ -489,7 +531,7 @@
 
       updateSession();
     </script>
-    <div id="credentialContainer" style="height:50px">
+    <div id="credentialContainer">
       <div id="userLoggedIn">
         <span class="fake-link" id="eventsButton" onclick="openManageEventsModal()">Manage Events</span><br>
         <span class="fake-link" id="logoutButton" onclick="logout()">Logout</span>
@@ -498,6 +540,7 @@
         <span class="fake-link" id="loginButton" onclick="openLogin()">Login</span><br>
         <span class="fake-link" id="createAccountButton" onclick="openCreateAccount()">Create Account</span>
       </div>
+      <a class="fake-link" href="https://sites.google.com/site/saratogaswimclub/calendar/reservation-help">Help</a>
     </div>
     <div class="reservation-div">
       <h1>Make a reservation!</h1> 
@@ -536,9 +579,9 @@
         <span id="closeRes" class="close">&times;</span>
         <form>
           <h2>Please confirm your reservation</h2>
-          <label for="resSummary">Reservation:</label>
-          <label id="resSummary"></label><br><br>
-          <input type="button" value="Confirm" onclick="postEvent()">
+          <label class="medium-font" for="resSummary">Reservation:</label>
+          <label class="medium-font" id="resSummary"></label><br><br>
+          <input class="medium-font" type="button" value="Confirm" onclick="postEvent()">
           <p id="resResults"></p>
           <span class="fake-link" id="resManageEventsButton" onclick="openManageEventsModal()">Manage Events</span>
         </form> 
@@ -551,8 +594,8 @@
         <span id="closeResConf" class="close">&times;</span>
         <form>
           <h2 id="resConfirmedTitle"></h2><br>
-          <p id="resConfResults"></p>
-          <input type="button" value="Dismiss" onclick="closeReservationConfirmedModal()"><br>
+          <p class="medium-font" id="resConfResults"></p>
+          <input class="medium-font" type="button" value="Dismiss" onclick="closeReservationConfirmedModal()"><br>
           <span class="fake-link" id="resManageEventsButton" onclick="openManageEventsModal()">Manage Events</span>
         </form> 
       </div>
@@ -563,14 +606,14 @@
       <div class="modal-content">
         <span id="closeLogin" class="close">&times;</span>
         <form>
-          <label for="username">Member Email:</label><br>
+          <label class="medium-font" for="username">Member Email:</label><br>
           <input type="text" id="loginEmail" name="username"><br><br>
-          <label for="member">Password: </label><br>
+          <label class="medium-font" for="member">Password: </label><br>
           <input type="password" id="loginPassword" name="password"><br><br>
-          <input type="button" value="Submit" onclick="postLogin()">
+          <input class="medium-font" type="button" value="Submit" onclick="postLogin()">
           <span class="fake-link" onclick="openForgotPassword()">Forgot Password?</span>
           <span class="fake-link" onclick="openCreateAccount()">Create Account</span>
-          <p id="loginResults"></p>
+          <p class="medium-font" id="loginResults"></p>
         </form> 
       </div>
     </div>
@@ -579,9 +622,9 @@
       <!-- Modal content -->
       <div class="modal-content">
         <span id="closeEvents" class="close">&times;</span>
-        <p id="manageEventsLoading"></p>
+        <h2 style="margin: 0 auto;" id="manageEventsLoading"></h2>
         <div id="manageEventsBody"></div>
-        <p id="manageEventsResults"></p>
+        <p class="medium-font" id="manageEventsResults"></p>
       </div>
     </div>
  
@@ -591,16 +634,16 @@
       <div class="modal-content">
         <span id="closeAccount" class="close">&times;</span>
         <form>
-          <label for="username">Member Email:</label><br>
+          <label class="medium-font" for="username">Member Email:</label><br>
           <input type="text" id="accountEmail" name="username"><br><br>
-          <label for="member">Password: </label><br>
+          <label class="medium-font" for="member">Password: </label><br>
           <input type="password" id="accountPassword" name="password"><br><br>
-          <label for="member">Validate Password: </label><br>
+          <label class="medium-font" for="member">Validate Password: </label><br>
           <input type="password" id="accountPasswordValidate" name="confirm"><br><br>
-          <input type="button" value="Submit" onclick="createAccountEvent()">
+          <input class="medium-font" type="button" value="Submit" onclick="createAccountEvent()">
           <span class="fake-link" onclick="openForgotPassword()">Forgot Password?</span>
           <span class="fake-link" onclick="openLogin()">Login</span>
-          <p id="accountResults"></p>
+          <p class="medium-font" id="accountResults"></p>
         </form> 
       </div>
     </div>
@@ -610,12 +653,12 @@
       <div class="modal-content">
         <span id="closeForgot" class="close">&times;</span>
         <form>
-          <label for="username">Member Email:</label><br>
+          <label class="medium-font" for="username">Member Email:</label><br>
           <input type="text" id="forgotEmail" name="username"><br><br>
-          <input id="eventSubmit" type="button" value="Submit" onclick="forgotPasswordEvent()">
+          <input class="medium-font" id="eventSubmit" type="button" value="Submit" onclick="forgotPasswordEvent()">
           <span class="fake-link" onclick="openLogin()">Login</span>
           <span class="fake-link" onclick="openCreateAccount()">Create Account</span>
-          <p id="forgotResults"></p>
+          <p class="medium-font" id="forgotResults"></p>
         </form> 
       </div>
     </div>
@@ -647,6 +690,8 @@
             updateSession();
         })
       }
+
+      // Open/Close modal operations
 
       function openLogin() {
         document.getElementById("loginResults").innerHTML = "";
@@ -702,18 +747,6 @@
         resConfirmModal.style.display = "none";
       }
 
-      function onEventDelete(status, data) {
-        if (!status) {
-          document.getElementById("manageEventsResults").innerHTML = data;
-        } else {
-          document.getElementById("manageEventsResults").innerHTML = "Event has been removed...";
-          setTimeout(() => {
-            if (manageEventsModal.style.display !== "none")
-              openManageEventsModal();
-          }, 1000);
-        }
-      }
-
       function openManageEventsModal() {
         document.getElementById("manageEventsBody").innerHTML = "";
         document.getElementById("manageEventsResults").innerHTML = "";
@@ -740,20 +773,28 @@
           var today = new Date();
 
           var div = document.getElementById("manageEventsBody");
+          var eventTable = document.createElement('table');
+          eventTable.className = "event";
+          eventTable.style.margin = "auto";
+
+          div.appendChild(eventTable);
           events.forEach(event => {
             let start =  new Date(event.start.dateTime);
             let end = new Date(event.end.dateTime);
 
-            var string = `${start.toLocaleDateString()} from ${start.toLocaleTimeString()} to ${end.toLocaleTimeString()}`;
+            var string = `${WEEKDAYS[start.getDay()]} ${start.toLocaleDateString()} from ${start.toLocaleTimeString()} to ${end.toLocaleTimeString()}`;
 
-            var eventDiv = document.createElement('div');
-            eventDiv.className = "event";
-            
+            // table row
+            var row = document.createElement('tr');
+
             // event link
-            var child = document.createElement('a');
-            child.href = event.htmlLink;
-            child.innerHTML = string;
-            eventDiv.appendChild(child);
+            var column1 = document.createElement('td');
+            var link = document.createElement('a');
+            link.href = event.htmlLink;
+            link.innerHTML = string;
+            link.className = "medium-font";
+            column1.appendChild(link);
+            row.appendChild(column1);
 
             if (start > today) {
               // delete button
@@ -761,16 +802,19 @@
                 deleteEventById(event.id, onEventDelete);
               }
 
+              var column2 = document.createElement('td');
+
               var button = document.createElement('span');
-              button.className = 'fake-link';
-              button.innerHTML = 'Delete Event';
+              button.className = "fake-link medium-font";
+              button.innerHTML = "Delete Event";
               button.style.marginLeft = "15px";
               button.onclick = deleteCallback;
 
-              eventDiv.appendChild(button);
+              column2.appendChild(button);
+              row.appendChild(column2);
             }
 
-            div.appendChild(eventDiv);
+            eventTable.appendChild(row);
           })
         }
 
@@ -820,11 +864,9 @@
         }
       }
 
-      var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-      var startTime, endTime;
+      // HTML actions
       function timeslotClicked(data, start, end) {
-        document.getElementById("resSummary").innerHTML = `${days[selectedDate.getDay()]} ${selectedDate.toLocaleDateString()} from ${data}`;
+        document.getElementById("resSummary").innerHTML = `${WEEKDAYS[selectedDate.getDay()]} ${selectedDate.toLocaleDateString()} from ${data}`;
         startTime = start;
         endTime = end;
         if (sessionExists)
@@ -931,6 +973,19 @@
         postNewAccount(accountCreds, callback);
       }
  
+      function onEventDelete(status, data) {
+        if (!status) {
+          document.getElementById("manageEventsResults").innerHTML = data;
+        } else {
+          document.getElementById("manageEventsResults").innerHTML = "Event has been removed...";
+          setTimeout(() => {
+            if (manageEventsModal.style.display !== "none")
+              openManageEventsModal();
+          }, 1000);
+        }
+      }
+
     </script>
   </body>
-
+</html>
+  
