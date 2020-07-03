@@ -207,10 +207,9 @@
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 0) {
             callback(false, 
-            ```
-            Connection to server refused, please use 3DCart reservation system:
-            <a href="https://saratogaswimclub.3dcartstores.com/Members--Swim-Time-reservation_c_13.html">Click Here</a>
-            ```
+            `
+            Connection to server refused, please email the board board@saratogaswim.com
+            `
             );
           }
         };
@@ -231,10 +230,9 @@
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 0) {
             callback(false, 
-            ```
-            Connection to server refused, please use 3DCart reservation system:
-            <a href="https://saratogaswimclub.3dcartstores.com/Members--Swim-Time-reservation_c_13.html">Click Here</a>
-            ```
+            `
+            Connection to server refused, please email the board board@saratogaswim.com
+            `
             );
           }
         };
@@ -256,10 +254,9 @@
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 0) {
             callback(false, 
-            ```
-            Connection to server refused, please use 3DCart reservation system:
-            <a href="https://saratogaswimclub.3dcartstores.com/Members--Swim-Time-reservation_c_13.html">Click Here</a>
-            ```
+            `
+            Connection to server refused, please email the board board@saratogaswim.com
+            `
             );
           }
         };
@@ -283,10 +280,9 @@
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 0) {
             callback(false, 
-            ```
-            Connection to server refused, please use 3DCart reservation system:
-            <a href="https://saratogaswimclub.3dcartstores.com/Members--Swim-Time-reservation_c_13.html">Click Here</a>
-            ```
+            `
+            Connection to server refused, please email the board board@saratogaswim.com
+            `
             );
           }
         };
@@ -309,10 +305,9 @@
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 0) {
             callback(false, 
-            ```
-            Connection to server refused, please use 3DCart reservation system:
-            <a href="https://saratogaswimclub.3dcartstores.com/Members--Swim-Time-reservation_c_13.html">Click Here</a>
-            ```
+            `
+            Connection to server refused, please email the board board@saratogaswim.com
+            `
             );
           }
         };
@@ -334,8 +329,10 @@
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 0) {
-            callback(false, "<strong>Connection to server refused, please use 3DCart reservation system</strong><br>" +
-            "<a href=\"https://saratogaswimclub.3dcartstores.com/Members--Swim-Time-reservation_c_13.html\">Click Here</a>"
+            callback(false, 
+            `
+            Connection to server refused, please email the board board@saratogaswim.com
+            `
             );
           }
         };
@@ -378,10 +375,9 @@
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 0) {
             callback(false, 
-            ```
-            Connection to server refused, please use 3DCart reservation system:
-            <a href="https://saratogaswimclub.3dcartstores.com/Members--Swim-Time-reservation_c_13.html">Click Here</a>
-            ```
+            `
+            Connection to server refused, please email the board board@saratogaswim.com
+            `
             );
           }
         };
@@ -472,36 +468,36 @@
           let ts1 = data.filter(slot => 
             slot.start.dateTime.getHours() === 11 && 
             slot.start.dateTime.getMinutes() === 0 &&
-            slot.end.dateTime.getHours() === 12 &&
-            slot.end.dateTime.getMinutes() === 30
+            slot.end.dateTime.getHours() >= 12 &&
+            slot.end.dateTime.getHours() <= 13
           );
 
           let ts2 = data.filter(slot => 
             slot.start.dateTime.getHours() === 13 && 
             slot.start.dateTime.getMinutes() === 0 &&
-            slot.end.dateTime.getHours() === 14 &&
-            slot.end.dateTime.getMinutes() === 30
+            slot.end.dateTime.getHours() >= 14 &&
+            slot.end.dateTime.getHours() <= 15
           );
 
           let ts3 = data.filter(slot => 
             slot.start.dateTime.getHours() === 15 && 
             slot.start.dateTime.getMinutes() === 0 &&
-            slot.end.dateTime.getHours() === 16 &&
-            slot.end.dateTime.getMinutes() === 30
+            slot.end.dateTime.getHours() >= 16 &&
+            slot.end.dateTime.getHours() <= 17
           );
 
           let ts4 = data.filter(slot => 
             slot.start.dateTime.getHours() === 17 && 
             slot.start.dateTime.getMinutes() === 0 &&
-            slot.end.dateTime.getHours() === 18 &&
-            slot.end.dateTime.getMinutes() === 30
+            slot.end.dateTime.getHours() >= 18 &&
+            slot.end.dateTime.getHours() <= 19
           );
 
           let ts5 = data.filter(slot => 
             slot.start.dateTime.getHours() === 19 && 
             slot.start.dateTime.getMinutes() === 0 &&
-            slot.end.dateTime.getHours() === 20 &&
-            slot.end.dateTime.getMinutes() === 30
+            slot.end.dateTime.getHours() >= 20 &&
+            slot.end.dateTime.getHours() <= 21
           );
 
           // Debug randomly disable timeslots simulating full slots
