@@ -207,9 +207,10 @@
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 0) {
             callback(false, 
-            `
-            Connection to server refused, please email the board board@saratogaswim.com
-            `
+            ```
+            Connection to server refused, please use 3DCart reservation system:
+            <a href="https://saratogaswimclub.3dcartstores.com/Members--Swim-Time-reservation_c_13.html">Click Here</a>
+            ```
             );
           }
         };
@@ -230,9 +231,10 @@
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 0) {
             callback(false, 
-            `
-            Connection to server refused, please email the board board@saratogaswim.com
-            `
+            ```
+            Connection to server refused, please use 3DCart reservation system:
+            <a href="https://saratogaswimclub.3dcartstores.com/Members--Swim-Time-reservation_c_13.html">Click Here</a>
+            ```
             );
           }
         };
@@ -254,9 +256,10 @@
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 0) {
             callback(false, 
-            `
-            Connection to server refused, please email the board board@saratogaswim.com
-            `
+            ```
+            Connection to server refused, please use 3DCart reservation system:
+            <a href="https://saratogaswimclub.3dcartstores.com/Members--Swim-Time-reservation_c_13.html">Click Here</a>
+            ```
             );
           }
         };
@@ -280,9 +283,10 @@
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 0) {
             callback(false, 
-            `
-            Connection to server refused, please email the board board@saratogaswim.com
-            `
+            ```
+            Connection to server refused, please use 3DCart reservation system:
+            <a href="https://saratogaswimclub.3dcartstores.com/Members--Swim-Time-reservation_c_13.html">Click Here</a>
+            ```
             );
           }
         };
@@ -305,9 +309,10 @@
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 0) {
             callback(false, 
-            `
-            Connection to server refused, please email the board board@saratogaswim.com
-            `
+            ```
+            Connection to server refused, please use 3DCart reservation system:
+            <a href="https://saratogaswimclub.3dcartstores.com/Members--Swim-Time-reservation_c_13.html">Click Here</a>
+            ```
             );
           }
         };
@@ -329,10 +334,8 @@
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 0) {
-            callback(false, 
-            `
-            Connection to server refused, please email the board board@saratogaswim.com
-            `
+            callback(false, "<strong>Connection to server refused, please use 3DCart reservation system</strong><br>" +
+            "<a href=\"https://saratogaswimclub.3dcartstores.com/Members--Swim-Time-reservation_c_13.html\">Click Here</a>"
             );
           }
         };
@@ -375,9 +378,10 @@
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4 && xhr.status == 0) {
             callback(false, 
-            `
-            Connection to server refused, please email the board board@saratogaswim.com
-            `
+            ```
+            Connection to server refused, please use 3DCart reservation system:
+            <a href="https://saratogaswimclub.3dcartstores.com/Members--Swim-Time-reservation_c_13.html">Click Here</a>
+            ```
             );
           }
         };
@@ -434,13 +438,21 @@
         // Do not allow timeslots after this week        
         let thisWeekEnd = new Date();
 
+        let offset = 0;
+
+        let now = new Date();
+        if ((now.getDay() === 4 && now.getHours() >= 18) || now.getDay() === 5)
+          offset = 7;
+
         if (thisWeekEnd.getDay() === 6) // weeks end on friday, find end of week relative to date
-          thisWeekEnd.setDate(thisWeekEnd.getDate() + 6);
+          thisWeekEnd.setDate(thisWeekEnd.getDate() + 6 + offset);
         else
-          thisWeekEnd.setDate(thisWeekEnd.getDate() + 5 - thisWeekEnd.getDay());
+          thisWeekEnd.setDate(thisWeekEnd.getDate() + 5 - thisWeekEnd.getDay() + offset);
+
 
         if (thisWeekEnd - selected < 0)
-          return document.getElementById("reservationMessage").innerHTML = "You may not make reservations after this week (ending on Friday)";
+          return document.getElementById("reservationMessage").innerHTML = "You may start making reservations for the following week starting on Thursdays a 6PM.";
+
 
         showAllTimeslots();
 
@@ -465,40 +477,41 @@
             data[i].end.dateTime = new Date(data[i].end.dateTime)
           }
 
-          let ts1 = data.filter(slot => 
-            slot.start.dateTime.getHours() === 11 && 
-            slot.start.dateTime.getMinutes() === 0 &&
-            slot.end.dateTime.getHours() >= 12 &&
-            slot.end.dateTime.getHours() <= 13
-          );
-
-          let ts2 = data.filter(slot => 
-            slot.start.dateTime.getHours() === 13 && 
-            slot.start.dateTime.getMinutes() === 0 &&
-            slot.end.dateTime.getHours() >= 14 &&
-            slot.end.dateTime.getHours() <= 15
-          );
-
-          let ts3 = data.filter(slot => 
-            slot.start.dateTime.getHours() === 15 && 
-            slot.start.dateTime.getMinutes() === 0 &&
-            slot.end.dateTime.getHours() >= 16 &&
-            slot.end.dateTime.getHours() <= 17
-          );
-
-          let ts4 = data.filter(slot => 
-            slot.start.dateTime.getHours() === 17 && 
-            slot.start.dateTime.getMinutes() === 0 &&
-            slot.end.dateTime.getHours() >= 18 &&
-            slot.end.dateTime.getHours() <= 19
-          );
-
-          let ts5 = data.filter(slot => 
-            slot.start.dateTime.getHours() === 19 && 
-            slot.start.dateTime.getMinutes() === 0 &&
-            slot.end.dateTime.getHours() >= 20 &&
-            slot.end.dateTime.getHours() <= 21
-          );
+            let ts1 = data.filter(slot => 
+              slot.start.dateTime.getHours() === 11 && 
+              slot.start.dateTime.getMinutes() === 0 &&
+              slot.end.dateTime.getHours() >= 12 &&
+              slot.end.dateTime.getHours() <= 13
+            );
+ 
+            
+            let ts2 = data.filter(slot => 
+              slot.start.dateTime.getHours() === 13 && 
+              slot.start.dateTime.getMinutes() === 0 &&
+              slot.end.dateTime.getHours() >= 14 &&
+              slot.end.dateTime.getHours() <= 15
+            );
+ 
+            let ts3 = data.filter(slot => 
+              slot.start.dateTime.getHours() === 15 && 
+              slot.start.dateTime.getMinutes() === 0 &&
+              slot.end.dateTime.getHours() >= 16 &&
+              slot.end.dateTime.getHours() <= 17
+            );
+ 
+            let ts4 = data.filter(slot => 
+              slot.start.dateTime.getHours() === 17 && 
+              slot.start.dateTime.getMinutes() === 0 &&
+              slot.end.dateTime.getHours() >= 18 &&
+              slot.end.dateTime.getHours() <= 19
+            );
+ 
+            let ts5 = data.filter(slot => 
+              slot.start.dateTime.getHours() === 19 && 
+              slot.start.dateTime.getMinutes() === 0 &&
+              slot.end.dateTime.getHours() >= 20 &&
+              slot.end.dateTime.getHours() <= 21
+            );
 
           // Debug randomly disable timeslots simulating full slots
           $("#11to1230").prop("disabled", ts1.length >= 4);
