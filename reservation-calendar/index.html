@@ -267,7 +267,7 @@
     <script>
       // Constants
       const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      const API_URL = "http://localhost:9507/api/";
+      const API_URL = "https://api.saratogaswimclub.com/dev/api/";
       const CALENDAR_API = API_URL + "reservations/";
       const FAMILY_RESERVATIONS_API = CALENDAR_API + "family/";
       const LAP_RESERVATIONS_API = CALENDAR_API + "lap/";
@@ -436,7 +436,10 @@
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             if (XMLHttpRequest.readyState === 0) {
-              document.getElementById("errorMessage").innerHTML = "Server cannot be reached, please contact the board of directors.";
+              document.getElementById("errorMessage").innerHTML = 
+                `
+                Connection to server refused, please email the board board@saratogaswim.com
+                `;
             }
           }}, 
           (res) => {
@@ -560,8 +563,7 @@
 
         const callback = (status, data) => {
           if (!status) {
-            console.log(status)
-            document.getElementById("errorMessage").innerHTML = data.message;
+            document.getElementById("errorMessage").innerHTML = data;
             return;
           }
 
@@ -1064,7 +1066,7 @@
       }
  
       function postLogin() {
-        var username = document.getElementById("loginEmail").value;
+        var username = document.getElementById("loginEmail").value.trim();
         var password = document.getElementById("loginPassword").value; 
 
         var loginCreds = {
