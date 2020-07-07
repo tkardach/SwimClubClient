@@ -50,8 +50,16 @@
         margin: 0 auto;
       }
 
-      .ui-datepicker {
-        font-size: 3vw;
+      @media screen and (min-width: 500px) {
+        .ui-datepicker {
+          font-size: 75%;
+        }
+      }
+      
+      @media screen and (min-width: 700px) {
+        .ui-datepicker {
+          font-size: 200%;
+        }
       }
 
       h1 {
@@ -166,7 +174,7 @@
       }
 
       #credentialContainer {
-        width: 25%;
+        width: 100%;
       }
 
       #credentialContainer span {
