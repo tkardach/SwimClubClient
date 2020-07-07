@@ -433,17 +433,24 @@
           url: USER_API + 'session', 
           xhrFields: {
             withCredentials: true
-          }}, (res) => {
-          if (res.sessionExists) {
-            sessionExists = true;
-            document.getElementById("userLoggedIn").style.display = "block";
-            document.getElementById("userLoggedOut").style.display = "none";
-          }
-          else {
-            sessionExists = false;
-            document.getElementById("userLoggedIn").style.display = "none";
-            document.getElementById("userLoggedOut").style.display = "block";
-          }
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.readyState === 0) {
+              document.getElementById("errorMessage").innerHTML = "Server cannot be reached, please contact the board of directors.";
+            }
+          }}, 
+          (res) => {
+            document.getElementById("errorMessage").innerHTML = "";
+            if (res.sessionExists) {
+              sessionExists = true;
+              document.getElementById("userLoggedIn").style.display = "block";
+              document.getElementById("userLoggedOut").style.display = "none";
+            }
+            else {
+              sessionExists = false;
+              document.getElementById("userLoggedIn").style.display = "none";
+              document.getElementById("userLoggedOut").style.display = "block";
+            }
         })
       }
 
@@ -553,6 +560,7 @@
 
         const callback = (status, data) => {
           if (!status) {
+            console.log(status)
             document.getElementById("errorMessage").innerHTML = data.message;
             return;
           }
@@ -635,6 +643,7 @@
     <div class="reservation-div">
       <h1>Make a reservation!</h1> 
       <br>
+      <p id="errorMessage"></p>
       <p>Please select a reservation type:</p>
       <form name="reservationTypeForm" class="switch-field">
         <input class="family" type="radio" id="family" name="reservationType" value="family" onclick="reservationTypeChanged(this)" checked>
@@ -642,7 +651,6 @@
         <input class="lap" type="radio" id="lap" name="reservationType" value="lap" onclick="reservationTypeChanged(this)">
         <label for="lap" class="large-font">Lap Swimming</label>
       </form>
-      <p id="errorMessage"></p>
       <input type="text" id="datep" />
       <div id="reservation-selection">
         <div id="datepicker">
@@ -876,6 +884,7 @@
           var today = new Date();
 
           var div = document.getElementById("manageEventsBody");
+          div.innerHTML = "";
           var eventTable = document.createElement('table');
           eventTable.className = "event";
           eventTable.style.margin = "auto";
@@ -1127,6 +1136,8 @@
         if (!status) {
           document.getElementById("manageEventsResults").innerHTML = data;
         } else {
+          if (selectedDate !== null)
+            showTimeSlots(selectedDate);
           document.getElementById("manageEventsResults").innerHTML = "Event has been removed...";
           setTimeout(() => {
             if (manageEventsModal.style.display !== "none")
