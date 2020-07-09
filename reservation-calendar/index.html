@@ -1,18 +1,16 @@
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://apis.google.com/js/api.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="shortcut icon" href="https://api.saratogaswimclub.com/images/customLogo.gif">
+    <title>Reservations!</title>
   </head>
   <body>
     <style>
-      
-      body {
-        margin: 5%;
-      }
-
       #datep {
         display: none;
       }
@@ -37,28 +35,26 @@
         text-align: left;
       }
 
-      p strong {
-        color: rgb(243, 6, 6);
-        font-size: 20px;
-      }
-
-      p red {
-        color: rgb(243, 6, 6);
-      }
       #reservation-selection {
         display: inline-block;
         margin: 0 auto;
       }
 
-      @media screen and (min-width: 500px) {
+      @media screen and (min-width: 50px) {
         .ui-datepicker {
-          font-size: 75%;
+          font-size: 100%;
+        }
+        .dynamic-font {
+          font-size: 80%!important;
         }
       }
       
       @media screen and (min-width: 700px) {
         .ui-datepicker {
           font-size: 200%;
+        }
+        .dynamic-font {
+          font-size: 200%!important;
         }
       }
 
@@ -186,6 +182,7 @@
       }
       .fake-link {
         font-size: 2vw;
+        margin: 0 10px;
         color: rgb(0, 98, 190);
         text-decoration: underline;
         cursor: pointer;
@@ -198,6 +195,17 @@
       
       .fake-link:active {
         color: rgb(0, 110, 212);
+      }
+
+      .nav-fake-link {
+        color: black;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+
+      .nav-fake-link:hover,
+      .nav-fake-link:focus {
+        color: rgb(53, 53, 53);
       }
 
       #event a {
@@ -271,11 +279,65 @@
       .switch-field label:last-of-type {
           border-radius: 0 4px 4px 0;
       }
+
+      .navbar-custom {
+        background-color: #00AFF3;
+      }
+      .navbar-custom .navbar-brand,
+      .navbar-custom .navbar-text {
+        color: black;
+      }
+      
+      .nav-link {
+        color: black;
+      }
+
+      .nav-link:hover,
+      .nav-link:focus {
+        color: rgb(53, 53, 53);
+      }
+      
+      span .nav-link {
+        color: black;
+        cursor: pointer;
+        display: inline-block;
+      }
+
+      span .nav-link:hover,
+      span .nav-link:focus {
+        color: rgb(53, 53, 53);
+      }
+
+      .userLoggedIn {
+        cursor: pointer;
+      }
+
+      .userLoggedOut {
+        cursor: pointer;
+      }
+
+      .expand-button {
+        background-color: white;
+        border-color: gray;
+        color: black;
+        width: 50%;
+        margin: auto;
+      }
+
+      p small {
+        font-size: 1vw;
+      }
+
     </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
       // Constants
       const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      const API_URL = "https://api.saratogaswimclub.com/dev/api/";
+      const API_URL = "https://api.saratogaswimclub.com/api/";
       const CALENDAR_API = API_URL + "reservations/";
       const FAMILY_RESERVATIONS_API = CALENDAR_API + "family/";
       const LAP_RESERVATIONS_API = CALENDAR_API + "lap/";
@@ -286,6 +348,7 @@
       var selectedDate = null;
       var startTime, endTime;
       var reservationType;
+      var openReservationAfterLogin = false;
 
       // Request Methods
 
@@ -454,13 +517,21 @@
             document.getElementById("errorMessage").innerHTML = "";
             if (res.sessionExists) {
               sessionExists = true;
-              document.getElementById("userLoggedIn").style.display = "block";
-              document.getElementById("userLoggedOut").style.display = "none";
+              let allIn = document.getElementsByClassName("userLoggedIn");
+              for (let i=0; i<allIn.length; i++)
+                allIn[i].style.display = "block";
+              let allOut = document.getElementsByClassName("userLoggedOut");
+              for (let i=0; i<allIn.length; i++)
+              allOut[i].style.display = "none";
             }
             else {
               sessionExists = false;
-              document.getElementById("userLoggedIn").style.display = "none";
-              document.getElementById("userLoggedOut").style.display = "block";
+              let allIn = document.getElementsByClassName("userLoggedIn");
+              for (let i=0; i<allIn.length; i++)
+                allIn[i].style.display = "none";
+              let allOut = document.getElementsByClassName("userLoggedOut");
+              for (let i=0; i<allIn.length; i++)
+              allOut[i].style.display = "block";
             }
         })
       }
@@ -639,16 +710,42 @@
 
       updateSession();
     </script>
-    <div id="credentialContainer">
-      <div id="userLoggedIn">
-        <span class="fake-link" id="eventsButton" onclick="openManageEventsModal()">Manage Events</span><br>
-        <span class="fake-link" id="logoutButton" onclick="logout()">Logout</span>
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+      <img src="https://api.saratogaswimclub.com/images/customLogo.gif" width="30" height="30" alt="">
+      <a class="navbar-brand" href="#">Saratoga Swim Club</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="https://sites.google.com/site/saratogaswimclub/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://sites.google.com/site/saratogaswimclub/calendar/reservation-help">Help</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item userLoggedIn navbar-right">
+            <a class="nav-link" id="eventsButton" onclick="openManageEventsModal()">Manage Events</a>
+          </li>
+          <li class="nav-item userLoggedIn navbar-right">
+            <a class="nav-link" id="logoutButton" onclick="logout()">Logout</a>
+          </li>
+          <li class="nav-item userLoggedOut navbar-right">
+            <a class="nav-link" id="loginButton" onclick="openLogin()">Login</a>
+          </li>
+          <li class="nav-item userLoggedOut navbar-right">
+            <a class="nav-link" id="createAccountButton" onclick="openCreateAccount()">Create Account</a>
+          </li>
+        </ul>
       </div>
-      <div id="userLoggedOut">
-        <span class="fake-link" id="loginButton" onclick="openLogin()">Login</span><br>
-        <span class="fake-link" id="createAccountButton" onclick="openCreateAccount()">Create Account</span>
-      </div>
-      <a class="fake-link" href="https://sites.google.com/site/saratogaswimclub/calendar/reservation-help">Help</a>
+    </nav>
+    <div style="text-align: center">
+      <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FLos_Angeles&amp;src=bHNzbW5zY3I4YTQ5YmNnNTFrbnZ0Z28yMzRAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%233F51B5&amp;mode=WEEK" 
+      style="border:solid 1px #777; margin: 50px" width="800" height="600" frameborder="0" scrolling="no">
+      </iframe>
     </div>
     <div class="reservation-div">
       <h1>Make a reservation!</h1> 
@@ -657,9 +754,9 @@
       <p>Please select a reservation type:</p>
       <form name="reservationTypeForm" class="switch-field">
         <input class="family" type="radio" id="family" name="reservationType" value="family" onclick="reservationTypeChanged(this)" checked>
-        <label for="family" class="large-font">Family Swimming</label>
+        <label for="family" class="dynamic-font">Family Swimming</label>
         <input class="lap" type="radio" id="lap" name="reservationType" value="lap" onclick="reservationTypeChanged(this)">
-        <label for="lap" class="large-font">Lap Swimming</label>
+        <label for="lap" class="dynamic-font">Lap Swimming</label>
       </form>
       <input type="text" id="datep" />
       <div id="reservation-selection">
@@ -946,6 +1043,10 @@
         const userInfo = getUserInformation(callback);
       }
  
+      function closeLoginModal() {
+        openReservationAfterLogin = false;
+        loginModal.style.display = 'none';
+      }
 
       // Close buttons
       resSpan.onclick = function() { 
@@ -955,7 +1056,7 @@
         resConfirmModal.style.display = 'none';
       }
       loginSpan.onclick = function() { 
-        loginModal.style.display = 'none';
+        closeLoginModal();
       }
       accSpan.onclick = function() { 
         createAccountModal.style.display = 'none';
@@ -976,7 +1077,7 @@
           resConfirmModal.style.display = "none";
         }
         if (event.target == loginModal)  {
-          loginModal.style.display = "none";
+          closeLoginModal();
         }
         if (event.target == forgotPasswordModal)  {
           forgotPasswordModal.style.display = "none";
@@ -1030,8 +1131,10 @@
 
         if (sessionExists)
           openReservationModal();
-        else 
+        else {
+          openReservationAfterLogin = true;
           openLogin();
+        }
       }
  
       function postEvent() {
@@ -1088,6 +1191,10 @@
             document.getElementById("loginResults").innerHTML = data.message;
           }
           else {
+            if (openReservationAfterLogin) {
+              openReservationAfterLogin = false;
+              openReservationModal();
+            }
             document.getElementById("loginResults").innerHTML = data;
             setTimeout(() => {loginModal.style.display = "none"}, 1000);
           }
