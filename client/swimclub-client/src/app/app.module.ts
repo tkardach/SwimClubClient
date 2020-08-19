@@ -7,6 +7,12 @@ import { MemberViewComponent } from './member-view/member-view.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
+import { ReservationsModule } from './reservations/reservations.module';
+import { SharedModule } from './shared/shared.module';
+import { SchedulesModule } from './schedules/schedules.module';
+import { FormsModule } from '@angular/forms'
+import { MaterialModule } from './material/material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 @NgModule({
   declarations: [
@@ -17,8 +23,14 @@ import { HomeComponent } from './home/home.component';
     HomeComponent
   ],
   imports: [
+    MaterialModule,
     BrowserModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    ReservationsModule,
+    SharedModule,
+    SchedulesModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,80 @@
+h2, h3 {
+  color: rgb(124, 124, 124);
+}
+
+h2 {
+  padding: 25px;
+}
+
+app-timeslot-view {
+  display: block;
+  margin: auto;
+}
+
+
+button:focus, button:active:focus, button.active:focus {
+  outline: 0 !important;
+  outline-style: none !important;
+  border: none !important;
+}
+
+.error-text {
+  color: rgb(218, 89, 89);
+  font-size: 12px;
+  margin-bottom: 0px;
+}
+
+.invalid-days {
+  border: 2px solid rgb(218, 89, 89);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.btn-group {
+  display: inline-block;
+}
+
+.btn-group button {
+  background-color: rgb(187, 187, 187);
+  font-size: 1.25em;
+}
+
+.btn-group div {
+  display: inline-block;
+}
+
+.toggled-button {
+  background-color: rgb(25, 129, 189) !important;
+}
+
+.submit {
+  background-color: rgb(79, 182, 79);
+  color: white;
+  margin-bottom: 25px;
+}
+
+.schedule {
+  margin: auto;
+  width: 80%;
+  text-align: center;
+}
+
+.icon-container {
+  text-align: center;
+  width: 100%;
+}
+.icon {
+  width: 4em;
+  height: 4em;
+}
+.icon.add {
+  color: rgb(73, 203, 226);
+  cursor: pointer;
+  padding: 10px;
+}
+.icon.add:hover {
+  color: rgb(59, 166, 185);
+}
+.icon.add:active {
+  color: rgb(52, 135, 150);
+}

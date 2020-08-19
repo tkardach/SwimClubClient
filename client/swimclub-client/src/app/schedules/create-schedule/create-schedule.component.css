@@ -1,0 +1,48 @@
+h2, h3 {
+  color: rgb(124, 124, 124);
+}
+
+h2 {
+  padding: 25px;
+}
+
+app-timeslot-view {
+  display: block;
+  margin: auto;
+}
+
+.btn-group button:focus, button:active:focus, button.active:focus {
+  outline: 0 !important;
+  outline-style: none !important;
+  border: none !important;
+}
+
+.btn-group button {
+  background-color: rgb(25, 129, 189)
+}
+
+.schedule {
+  margin: auto;
+  width: 80%;
+  text-align: center;
+}
+
+.icon-container {
+  text-align: center;
+  width: 100%;
+}
+.icon {
+  width: 4em;
+  height: 4em;
+}
+.icon.add {
+  color: rgb(73, 203, 226);
+  cursor: pointer;
+  padding: 10px;
+}
+.icon.add:hover {
+  color: rgb(59, 166, 185);
+}
+.icon.add:active {
+  color: rgb(52, 135, 150);
+}

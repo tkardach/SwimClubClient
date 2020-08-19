@@ -3,3 +3,43 @@
   padding:2px;
   margin-left: 7px;
 }
+
+.navbar-custom {
+  background-color: #00AFF3;
+}
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+  color: black;
+}
+
+.nav-link {
+  color: black;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: rgb(53, 53, 53);
+}
+
+span .nav-link {
+  color: black;
+  cursor: pointer;
+  display: inline-block;
+}
+
+span .nav-link:hover,
+span .nav-link:focus {
+  color: rgb(53, 53, 53);
+}
+
+.user-logged-in {
+  cursor: pointer;
+}
+
+.user-logged-out {
+  cursor: pointer;
+}
+
+.nav-option {
+  cursor: pointer;
+}

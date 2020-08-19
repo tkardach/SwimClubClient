@@ -1,0 +1,45 @@
+<div class="schedule">
+  <h2>Schedule Generator</h2>
+  <div class="btn-group">
+    <button mat-fab aria-label="Monday">
+      M
+    </button>
+    <button mat-fab aria-label="Wednesday">
+      T
+    </button>
+    <button mat-fab aria-label="Wednesday">
+      W
+    </button>
+    <button mat-fab aria-label="Thursday">
+      Th
+    </button>
+    <button mat-fab aria-label="Friday">
+      F
+    </button>
+    <button mat-fab aria-label="Saturday">
+     S
+    </button>
+    <button mat-fab aria-label="Sunday">
+      Su
+    </button>
+  </div>
+  <br>
+  <mat-form-field>
+    <mat-label>Starting Date</mat-label>
+    <input matInput type="date">
+  </mat-form-field>
+  <div>
+    <h3>Timeslots</h3>
+    <div *ngFor="let timeslot of schedule?.timeslots; last as isLast">
+      <app-timeslot-view *ngIf="!isLast"></app-timeslot-view>
+      <app-timeslot-view *ngIf="isLast" [edit]="true"></app-timeslot-view>
+    </div>
+    <div class="icon-container">
+      <svg viewBox="0 0 16 16" class="bi bi-plus-circle icon add" (click)="addTimeslot()" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+        <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+      </svg>
+    </div>
+  </div>
+</div>
