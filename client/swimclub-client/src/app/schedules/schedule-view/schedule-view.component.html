@@ -1,66 +1,22 @@
 <div class="schedule">
-  <h2>Schedule Generator</h2>
-  <p class="error-text" *ngIf="invalidDays">You must select the days this schedule will apply.</p>
-  
-  <div class="btn-group" [class.invalid-days]="invalidDays">
-    <div>
-      <button mat-fab [class.toggled-button]="monday" (click)="monday=!monday" aria-label="Monday">
-        M
-      </button>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title>{{getWeekdayString(schedule?.day)}}</mat-card-title>
+        <mat-card-subtitle>Starts {{schedule?.startDate.toLocaleDateString()}}</mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card-header>
+    <div class="card-content">
+      <mat-card-content>
+        <mat-card-title *ngIf="schedule?.timeslots.length === 0">No timeslots for this schedule</mat-card-title>
+        <div *ngFor="let timeslot of schedule?.timeslots; let index=index;">
+          <app-timeslot-view [(timeslot)]="schedule?.timeslots[index]"></app-timeslot-view>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>EDIT</button>
+        <button mat-button>REMOVE</button>
+      </mat-card-actions>
     </div>
-    <div>
-      <button mat-fab [class.toggled-button]="tuesday" (click)="tuesday=!tuesday" aria-label="Wednesday">
-        T
-      </button>
-    </div>
-    <div>
-      <button mat-fab [class.toggled-button]="wednesday" (click)="wednesday=!wednesday" aria-label="Wednesday">
-        W
-      </button>
-    </div>
-    <div>
-      <button mat-fab [class.toggled-button]="thursday" (click)="thursday=!thursday" aria-label="Thursday">
-        Th
-      </button>
-    </div>
-    <div>
-      <button mat-fab [class.toggled-button]="friday" (click)="friday=!friday" aria-label="Friday">
-        F
-      </button>
-    </div>
-    <div>
-      <button mat-fab [class.toggled-button]="saturday" (click)="saturday=!saturday" aria-label="Saturday">
-        S
-      </button>
-    </div>
-    <div>
-      <button mat-fab [class.toggled-button]="sunday" (click)="sunday=!sunday" aria-label="Sunday">
-        Su
-      </button>
-    </div>
-  </div>
-  <br>
-  <br>
-  <br>
-  <mat-form-field>
-    <mat-label>Starting Date</mat-label>
-    <input matInput type="date">
-  </mat-form-field>
-  <div>
-    <h3>Timeslots</h3>
-    <div *ngFor="let timeslot of schedule?.timeslots; last as isLast">
-      <app-timeslot-view *ngIf="!isLast"></app-timeslot-view>
-      <app-timeslot-view *ngIf="isLast" [edit]="true"></app-timeslot-view>
-    </div>
-    <div class="icon-container">
-      <svg viewBox="0 0 16 16" class="bi bi-plus-circle icon add" (click)="addTimeslot()" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
-        <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
-        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-      </svg>
-    </div>
-  </div>
-  <br>
-  <br>
-  <button class="submit" (click)="onSubmit()" mat-raised-button>Save</button>
+  </mat-card>
 </div>

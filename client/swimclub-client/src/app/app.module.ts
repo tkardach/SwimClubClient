@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MemberViewComponent } from './member-view/member-view.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
@@ -12,15 +11,19 @@ import { SharedModule } from './shared/shared.module';
 import { SchedulesModule } from './schedules/schedules.module';
 import { FormsModule } from '@angular/forms'
 import { MaterialModule } from './material/material.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthenticationModule } from './authentication/authentication.module';
+import { AuthGuard } from './authentication/authentication.guard';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { AllSchedulesComponent } from './pages/all-schedules/all-schedules.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MemberViewComponent,
     HeaderComponent,
     FooterComponent,
-    HomeComponent
+    HomeComponent,
+    AllSchedulesComponent
   ],
   imports: [
     MaterialModule,
@@ -28,11 +31,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     AppRoutingModule,
     ReservationsModule,
+    HttpClientModule,
     SharedModule,
     SchedulesModule,
-    FormsModule
+    FormsModule,
+    AuthenticationModule
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    HttpClient
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

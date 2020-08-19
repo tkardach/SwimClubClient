@@ -22,9 +22,7 @@ div.timeslot {
 
 .timeslot-icons .icon {
   cursor: pointer;
-  width: 2em;
-  height: 2em;
-  vertical-align: middle;
+  font-size: 2.25em;
 }
 .timeslot-icons .confirm {
   color: rgb(62, 189, 79);
@@ -34,4 +32,24 @@ div.timeslot {
 }
 .timeslot-icons .confirm:active {
   color: rgb(30, 128, 43);
+}
+
+.timeslot-icons .edit {
+  color: rgb(126, 126, 126);
+}
+.timeslot-icons .edit:hover {
+  color: rgb(97, 97, 97);
+}
+.timeslot-icons .edit:active {
+  color: rgb(75, 75, 75);
+}
+
+.timeslot-icons .delete {
+  color: rgb(204, 49, 49);
+}
+.timeslot-icons .delete:hover {
+  color: rgb(163, 39, 39);
+}
+.timeslot-icons .delete:active {
+  color: rgb(139, 35, 35);
 }

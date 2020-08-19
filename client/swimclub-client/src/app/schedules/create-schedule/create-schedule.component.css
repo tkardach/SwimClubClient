@@ -1,24 +1,49 @@
-h2, h3 {
-  color: rgb(124, 124, 124);
-}
-
-h2 {
-  padding: 25px;
-}
 
 app-timeslot-view {
   display: block;
   margin: auto;
 }
 
-.btn-group button:focus, button:active:focus, button.active:focus {
+
+button:focus, button:active:focus, button.active:focus {
   outline: 0 !important;
   outline-style: none !important;
   border: none !important;
 }
 
+.error-text {
+  color: rgb(218, 89, 89);
+  font-size: 12px;
+  margin-bottom: 0px;
+}
+
+.invalid {
+  border: 2px solid rgb(218, 89, 89);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.btn-group {
+  display: inline-block;
+}
+
 .btn-group button {
-  background-color: rgb(25, 129, 189)
+  background-color: rgb(187, 187, 187);
+  font-size: 1.25em;
+}
+
+.btn-group div {
+  display: inline-block;
+}
+
+.toggled-button {
+  background-color: rgb(25, 129, 189) !important;
+}
+
+.submit {
+  background-color: rgb(79, 182, 79);
+  color: white;
+  margin-bottom: 25px;
 }
 
 .schedule {

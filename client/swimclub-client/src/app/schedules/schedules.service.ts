@@ -14,9 +14,7 @@ export interface ScheduleTimeslot {
 export interface Schedule {
   day: number,
   startDate: Date,
-  timeslots: ScheduleTimeslot[],
-  maxFamilyReservations: number,
-  maxLapReservations: number
+  timeslots: ScheduleTimeslot[]
 }
 
 
@@ -24,8 +22,7 @@ export interface Schedule {
   providedIn: SchedulesModule
 })
 export class SchedulesService {
-  API_URL: string = environment.apiUrl;
-  SCHEDULE_URL: string = this.API_URL + '/schedules'
+  private readonly _url = '/api/schedules/'
 
   headers: HttpHeaders = new HttpHeaders()
     .set('Content-Type', 'application/json');
@@ -35,10 +32,18 @@ export class SchedulesService {
   }
 
   getSchedules() {
-    return this.http.get<Array<Schedule>>(this.SCHEDULE_URL, {headers: this.headers}).toPromise();
+    return this.http.get<Array<Schedule>>(this._url, {headers: this.headers}).toPromise();
   }
 
   postSchedule(schedule: Schedule) {
-    return this.http.post<any>(this.SCHEDULE_URL, schedule, {headers: this.headers})
+    return this.http.post<any>(this._url, schedule, {headers: this.headers}).toPromise()
+  }
+
+  putSchedule(id: string, schedule: Schedule) {
+    return this.http.put<Schedule>(this._url + id, schedule, {headers: this.headers}).toPromise()
+  }
+
+  postScheduleArray(schedules: Array<Schedule>) {
+    return this.http.post<any>(this._url + 'array', schedules, {headers: this.headers}).toPromise()
   }
 }

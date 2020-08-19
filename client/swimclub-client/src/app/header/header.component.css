@@ -43,3 +43,7 @@ span .nav-link:focus {
 .nav-option {
   cursor: pointer;
 }
+
+.hide {
+  display: none;
+}

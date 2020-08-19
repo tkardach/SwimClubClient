@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MemberViewComponent } from './member-view.component';
+import { AllSchedulesComponent } from './all-schedules.component';
 
-describe('MemberViewComponent', () => {
-  let component: MemberViewComponent;
-  let fixture: ComponentFixture<MemberViewComponent>;
+describe('AllSchedulesComponent', () => {
+  let component: AllSchedulesComponent;
+  let fixture: ComponentFixture<AllSchedulesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MemberViewComponent ]
+      declarations: [ AllSchedulesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MemberViewComponent);
+    fixture = TestBed.createComponent(AllSchedulesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

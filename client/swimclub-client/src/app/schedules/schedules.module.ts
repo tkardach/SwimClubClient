@@ -6,6 +6,7 @@ import { TimeslotViewComponent } from './timeslot-view/timeslot-view.component';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
+import { ScheduleListComponent } from './schedule-list/schedule-list.component';
 
 
 
@@ -13,7 +14,8 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     CreateScheduleComponent,
     ScheduleViewComponent,
-    TimeslotViewComponent
+    TimeslotViewComponent,
+    ScheduleListComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { SharedModule } from '../shared/shared.module';
   exports: [
     CreateScheduleComponent,
     ScheduleViewComponent,
-    TimeslotViewComponent
+    TimeslotViewComponent,
+    ScheduleListComponent
   ]
 })
 export class SchedulesModule { }

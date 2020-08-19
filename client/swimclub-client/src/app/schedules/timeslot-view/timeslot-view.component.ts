@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { ScheduleTimeslot } from '../schedules.service';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-timeslot-view',
@@ -7,24 +8,44 @@ import { ScheduleTimeslot } from '../schedules.service';
   styleUrls: ['./timeslot-view.component.css']
 })
 export class TimeslotViewComponent implements OnInit {
-  private _timeslot: ScheduleTimeslot = null;
 
-  startTime: string = "00:00";
-  endTime: string = "00:00";
-  maxOccupants: number = 1;
-  timeslotType: string = "family";
-
-  @Input('timeslot') set timeslot(value: ScheduleTimeslot) {
-    this._timeslot = value; 
-    this.startTime = this.convertTimeToString(value.start);
-    this.endTime = this.convertTimeToString(value.end);
+  set startTime(value: string) {
+    this.timeslot.start = this.convertStringToTime(value);
   }
-  get timeslot() { return this._timeslot; }
+  get startTime(): string {
+    return this.convertTimeToString(this.timeslot.start);
+  }
+
+  set endTime(value: string) {
+    this.timeslot.end = this.convertStringToTime(value);
+  }
+  get endTime(): string {
+    return this.convertTimeToString(this.timeslot.end);
+  }
+
+  set maxOccupants(value: number) {
+    this.timeslot.maxOccupants = value;
+  }
+  get maxOccupants(): number {
+    return this.timeslot.maxOccupants;
+  }
+
+  set timeslotType(value: string) {
+    this.timeslot.type = value;
+  }
+  get timeslotType(): string {
+    return this.timeslot.type;
+  }
+
+  @Input() timeslot: ScheduleTimeslot;
+  @Output() timeslotChange = new EventEmitter<ScheduleTimeslot>();
+
+  @Output() onDelete = new EventEmitter();
 
   @Input('edit') edit: boolean = false;
 
   constructor() { 
-    this._timeslot = {
+    this.timeslot = {
       start: 0,
       end: 0,
       maxOccupants: 1,
@@ -47,10 +68,10 @@ export class TimeslotViewComponent implements OnInit {
   convertTimeToString(time: number): string {
     if (time < 0 || time >= 2400) return "Invalid Time"
 
-    let hour = time / 100;
+    let hour = Math.floor(time / 100);
     let minute = time % 100;
     
-    return `${hour % 12}:${minute == 0 ? "00":minute}`;
+    return `${hour < 10 ? `0${hour}` : hour}:${minute < 10 ? `0${minute}`:minute}`;
   }
 
   convertStringToTime(time: string): number {
@@ -59,13 +80,14 @@ export class TimeslotViewComponent implements OnInit {
 
   onConfirmChanges() {
     this.edit = false;
-    if (this._timeslot === null)
+    if (this.timeslot === null)
       return;
     
-    this._timeslot.start = this.convertStringToTime(this.startTime);
-    this._timeslot.end = this.convertStringToTime(this.endTime);
-    this._timeslot.maxOccupants = this.maxOccupants;
-    this._timeslot.type = this.timeslotType;
+    this.timeslot.start = this.convertStringToTime(this.startTime);
+    this.timeslot.end = this.convertStringToTime(this.endTime);
+    this.timeslot.maxOccupants = this.maxOccupants;
+    this.timeslot.type = this.timeslotType;
+    this.timeslotChange.emit(this.timeslot);
   }
 
   onEnterEditMode() {
