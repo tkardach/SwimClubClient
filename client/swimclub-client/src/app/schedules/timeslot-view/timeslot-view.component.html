@@ -26,7 +26,7 @@
       <input matInput class="form-field number-picker" type="text" [(ngModel)]="timeslotType" readonly>
     </mat-form-field>
   </div>
-  <div class="timeslot-icons">
+  <div class="timeslot-icons" *ngIf="editMode">
     <div *ngIf="edit">
       <mat-icon (click)="onConfirmChanges()"  class="icon confirm">check_circle_outline</mat-icon>
     </div>

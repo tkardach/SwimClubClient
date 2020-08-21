@@ -3,19 +3,22 @@
     <mat-card-header>
       <mat-card-title-group>
         <mat-card-title>{{getWeekdayString(schedule?.day)}}</mat-card-title>
-        <mat-card-subtitle>Starts {{schedule?.startDate.toLocaleDateString()}}</mat-card-subtitle>
+        <mat-card-subtitle>Starts {{getDateString(schedule?.startDate)}}</mat-card-subtitle>
       </mat-card-title-group>
     </mat-card-header>
     <div class="card-content">
       <mat-card-content>
         <mat-card-title *ngIf="schedule?.timeslots.length === 0">No timeslots for this schedule</mat-card-title>
         <div *ngFor="let timeslot of schedule?.timeslots; let index=index;">
-          <app-timeslot-view [(timeslot)]="schedule?.timeslots[index]"></app-timeslot-view>
+          <app-timeslot-view 
+            [(timeslot)]="schedule?.timeslots[index]"
+            [editMode]="editMode"></app-timeslot-view>
         </div>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button>EDIT</button>
+        <button mat-button (click)="editMode = !editMode">EDIT</button>
         <button mat-button>REMOVE</button>
+        <button mat-button *ngIf="editMode">SAVE</button>
       </mat-card-actions>
     </div>
   </mat-card>

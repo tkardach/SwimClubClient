@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Schedule, ScheduleTimeslot } from '../schedules.service';
 
 @Component({
@@ -7,7 +7,12 @@ import { Schedule, ScheduleTimeslot } from '../schedules.service';
   styleUrls: ['./create-schedule.component.css']
 })
 export class CreateScheduleComponent implements OnInit {
-  @Input() schedule: Schedule = null; 
+  @Input() schedules: Array<Schedule> = []; 
+  @Output() schedulesChange = new EventEmitter<Array<Schedule>>();
+
+  @Output() onSubmit = new EventEmitter();
+
+  timeslots: Array<ScheduleTimeslot> = [];
 
   invalidDays: boolean = false;
   invalidDate: boolean = false;
@@ -20,16 +25,15 @@ export class CreateScheduleComponent implements OnInit {
   saturday: boolean = false;
   sunday: boolean = false;
   
-  date: Date = null;
+  private date: Date = null;
 
-  constructor() {
-    this.schedule = {
-      day: 0,
-      startDate: new Date(),
-      timeslots: [] as ScheduleTimeslot[]
-    } }
+  constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onDateChange() {
+    this.schedules.forEach(schedule => schedule.startDate = this.date);
   }
 
   addTimeslot() {
@@ -39,7 +43,66 @@ export class CreateScheduleComponent implements OnInit {
       type: 'family',
       maxOccupants: 1 
     };
-    this.schedule.timeslots.push(timeslot);
+    this.timeslots.push(timeslot);
+  }
+
+  addSchedule(day: number) {
+    const filtered = this.schedules.filter(schedule => schedule.day === day);
+    if (filtered.length > 0) return;
+
+    this.schedules.push({
+      day: day,
+      timeslots: this.timeslots,
+      startDate: new Date(this.date)
+    })
+  }
+
+  removeSchedule(day: number) {
+    const filtered = this.schedules.filter(schedule => schedule.day === day);
+    
+    const index = this.schedules.indexOf(filtered[0])
+    if (index < 0) return;
+
+    this.schedules.splice(index, 1);
+  }
+
+  dayToggled(day: number) {
+    let remove = false;
+    switch(day) {
+      case 0: 
+        this.sunday = !this.sunday;
+        remove = !this.sunday;
+        break;
+      case 1:
+        this.monday = !this.monday;
+        remove = !this.monday;
+        break;
+      case 2:
+        this.tuesday = !this.tuesday;
+        remove = !this.tuesday;
+        break;
+      case 3:
+        this.wednesday = !this.wednesday;
+        remove = !this.wednesday;
+        break;
+      case 4:
+        this.thursday = !this.thursday;
+        remove = !this.thursday;
+        break;
+      case 5:
+        this.friday = !this.friday;
+        remove = !this.friday;
+        break;
+      case 6:
+        this.saturday = !this.saturday;
+        remove = !this.saturday;
+        break;
+      default:
+        return;
+    }
+
+    if (remove) return this.removeSchedule(day);
+    this.addSchedule(day);
   }
 
   resetValidation() {
@@ -51,7 +114,7 @@ export class CreateScheduleComponent implements OnInit {
     return this.invalidDate || this.invalidDate;
   }
 
-  onSubmit() {
+  submit() {
     this.resetValidation();
     if (!this.monday && !this.tuesday && !this.wednesday && !this.thursday && 
         !this.friday && !this.saturday && !this.sunday) {
@@ -61,12 +124,15 @@ export class CreateScheduleComponent implements OnInit {
       this.invalidDate = true;
     }
     if (this.invalid()) return;
+
+    this.schedulesChange.emit(this.schedules);
+    this.onSubmit.emit();
   }
 
   deleteTimeslot(index: number) {
-    if (index < 0 || index >= this.schedule.timeslots.length) 
+    if (index < 0 || index >= this.timeslots.length) 
       return;
     
-    this.schedule.timeslots.splice(index, 1);
+    this.timeslots.splice(index, 1);
   }
 }

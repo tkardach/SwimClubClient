@@ -4,37 +4,37 @@
   
   <div class="btn-group" [class.invalid]="invalidDays">
     <div>
-      <button mat-fab [class.toggled-button]="monday" (click)="monday=!monday" aria-label="Monday">
+      <button mat-fab [class.toggled-button]="monday" (click)="dayToggled(1)" aria-label="Monday">
         M
       </button>
     </div>
     <div>
-      <button mat-fab [class.toggled-button]="tuesday" (click)="tuesday=!tuesday" aria-label="Wednesday">
+      <button mat-fab [class.toggled-button]="tuesday" (click)="dayToggled(2)" aria-label="Wednesday">
         T
       </button>
     </div>
     <div>
-      <button mat-fab [class.toggled-button]="wednesday" (click)="wednesday=!wednesday" aria-label="Wednesday">
+      <button mat-fab [class.toggled-button]="wednesday" (click)="dayToggled(3)" aria-label="Wednesday">
         W
       </button>
     </div>
     <div>
-      <button mat-fab [class.toggled-button]="thursday" (click)="thursday=!thursday" aria-label="Thursday">
+      <button mat-fab [class.toggled-button]="thursday" (click)="dayToggled(4)" aria-label="Thursday">
         Th
       </button>
     </div>
     <div>
-      <button mat-fab [class.toggled-button]="friday" (click)="friday=!friday" aria-label="Friday">
+      <button mat-fab [class.toggled-button]="friday" (click)="dayToggled(5)" aria-label="Friday">
         F
       </button>
     </div>
     <div>
-      <button mat-fab [class.toggled-button]="saturday" (click)="saturday=!saturday" aria-label="Saturday">
+      <button mat-fab [class.toggled-button]="saturday" (click)="dayToggled(6)" aria-label="Saturday">
         S
       </button>
     </div>
     <div>
-      <button mat-fab [class.toggled-button]="sunday" (click)="sunday=!sunday" aria-label="Sunday">
+      <button mat-fab [class.toggled-button]="sunday" (click)="dayToggled(0)" aria-label="Sunday">
         Su
       </button>
     </div>
@@ -45,13 +45,13 @@
   <p class="error-text" *ngIf="invalidDate">You must select the date this schedule will start to apply.</p>
   <mat-form-field [class.invalid]="invalidDate">
     <mat-label>Starting Date</mat-label>
-    <input matInput type="date" [(ngModel)]="date">
+    <input matInput type="date" (change)="onDateChange()" [(ngModel)]="date">
   </mat-form-field>
   <div>
     <h3>Timeslots</h3>
-    <div *ngFor="let timeslot of schedule?.timeslots; last as isLast; let index=index">
-      <app-timeslot-view [(timeslot)]="schedule?.timeslots[index]" *ngIf="!isLast" (onDelete)="deleteTimeslot(index)"></app-timeslot-view>
-      <app-timeslot-view [(timeslot)]="schedule?.timeslots[index]" *ngIf="isLast" [edit]="true" (onDelete)="deleteTimeslot(index)"></app-timeslot-view>
+    <div *ngFor="let timeslot of timeslots; last as isLast; let index=index">
+      <app-timeslot-view [(timeslot)]="timeslots[index]" *ngIf="!isLast" (onDelete)="deleteTimeslot(index)"></app-timeslot-view>
+      <app-timeslot-view [(timeslot)]="timeslots[index]" *ngIf="isLast" [edit]="true" (onDelete)="deleteTimeslot(index)"></app-timeslot-view>
     </div>
     <div class="icon-container">
       <svg viewBox="0 0 16 16" class="bi bi-plus-circle icon add" (click)="addTimeslot()" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -63,5 +63,5 @@
   </div>
   <br>
   <br>
-  <button class="submit" (click)="onSubmit()" mat-raised-button>Save</button>
+  <button class="submit" (click)="submit()" mat-raised-button>Save</button>
 </div>

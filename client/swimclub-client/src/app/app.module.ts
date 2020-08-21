@@ -15,15 +15,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { AuthGuard } from './authentication/authentication.guard';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { AllSchedulesComponent } from './pages/all-schedules/all-schedules.component';
+import { PagesModule } from './pages/pages.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    HomeComponent,
-    AllSchedulesComponent
+    HomeComponent
   ],
   imports: [
     MaterialModule,
@@ -35,7 +34,8 @@ import { AllSchedulesComponent } from './pages/all-schedules/all-schedules.compo
     SharedModule,
     SchedulesModule,
     FormsModule,
-    AuthenticationModule
+    AuthenticationModule,
+    PagesModule
   ],
   providers: [
     AuthGuard,

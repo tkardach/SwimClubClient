@@ -42,7 +42,9 @@ export class TimeslotViewComponent implements OnInit {
 
   @Output() onDelete = new EventEmitter();
 
-  @Input('edit') edit: boolean = false;
+  @Input() edit: boolean = false;
+
+  @Input() editMode: boolean = true;
 
   constructor() { 
     this.timeslot = {

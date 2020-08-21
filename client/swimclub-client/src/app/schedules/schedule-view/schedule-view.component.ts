@@ -8,6 +8,7 @@ import { Schedule, ScheduleTimeslot } from '../schedules.service';
 })
 export class ScheduleViewComponent implements OnInit {
   @Input() schedule: Schedule = null; 
+  @Input() editMode: boolean = false;
 
   constructor() {
     this.schedule = {
@@ -18,6 +19,11 @@ export class ScheduleViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  getDateString(date: Date) {
+    const newDate = new Date(date);
+    return newDate.toLocaleDateString();
   }
 
   getWeekdayString(num: number): string {
