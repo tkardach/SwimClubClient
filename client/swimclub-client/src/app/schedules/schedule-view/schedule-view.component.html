@@ -12,13 +12,14 @@
         <div *ngFor="let timeslot of schedule?.timeslots; let index=index;">
           <app-timeslot-view 
             [(timeslot)]="schedule?.timeslots[index]"
-            [editMode]="editMode"></app-timeslot-view>
+            [editMode]="editMode"
+            (delete)="deleteTimeslot(index)"></app-timeslot-view>
         </div>
       </mat-card-content>
       <mat-card-actions>
         <button mat-button (click)="editMode = !editMode">EDIT</button>
-        <button mat-button>REMOVE</button>
-        <button mat-button *ngIf="editMode">SAVE</button>
+        <button mat-button (click)="onRemove()">REMOVE</button>
+        <button mat-button *ngIf="editMode" (click)="onSave()">SAVE</button>
       </mat-card-actions>
     </div>
   </mat-card>

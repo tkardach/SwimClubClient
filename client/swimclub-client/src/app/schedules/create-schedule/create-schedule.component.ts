@@ -25,7 +25,7 @@ export class CreateScheduleComponent implements OnInit {
   saturday: boolean = false;
   sunday: boolean = false;
   
-  private date: Date = null;
+  date: Date = null;
 
   constructor() { }
 
@@ -51,6 +51,7 @@ export class CreateScheduleComponent implements OnInit {
     if (filtered.length > 0) return;
 
     this.schedules.push({
+      _id: '',
       day: day,
       timeslots: this.timeslots,
       startDate: new Date(this.date)

@@ -10,8 +10,12 @@ export class ScheduleViewComponent implements OnInit {
   @Input() schedule: Schedule = null; 
   @Input() editMode: boolean = false;
 
+  @Output() remove = new EventEmitter();
+  @Output() save = new EventEmitter();
+
   constructor() {
     this.schedule = {
+      _id: '',
       day: 0,
       startDate: new Date(),
       timeslots: [] as ScheduleTimeslot[]
@@ -39,4 +43,15 @@ export class ScheduleViewComponent implements OnInit {
     }
   }
 
+  onSave() {
+    this.save.emit();
+  }
+
+  onRemove() {
+    this.remove.emit();
+  }
+
+  deleteTimeslot(index: number) {
+    this.schedule.timeslots.splice(index, 1);
+  }
 }

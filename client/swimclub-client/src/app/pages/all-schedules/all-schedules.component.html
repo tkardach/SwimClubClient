@@ -1,1 +1,5 @@
-<app-schedule-list [schedules]="schedules"></app-schedule-list>
+<app-schedule-list 
+[schedules]="schedules"
+(save)="onSave()"
+(removeSchedule)="removeSchedule($event)">
+</app-schedule-list>

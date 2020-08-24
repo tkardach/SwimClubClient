@@ -12,6 +12,7 @@ export interface ScheduleTimeslot {
 }
 
 export interface Schedule {
+  _id: string,
   day: number,
   startDate: Date,
   timeslots: ScheduleTimeslot[]

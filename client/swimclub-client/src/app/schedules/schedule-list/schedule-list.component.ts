@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Schedule } from '../schedules.service';
 
 @Component({
@@ -9,8 +9,19 @@ import { Schedule } from '../schedules.service';
 export class ScheduleListComponent implements OnInit {
   @Input() schedules: Array<Schedule> = null;
 
+  @Output() removeSchedule = new EventEmitter<number>();
+  @Output() save = new EventEmitter();
+
   constructor() { }
 
   ngOnInit():void {
+  }
+
+  onSave() {
+    this.save.emit();
+  }
+
+  onRemove(index: number) {
+    this.removeSchedule.emit(index);
   }
 }

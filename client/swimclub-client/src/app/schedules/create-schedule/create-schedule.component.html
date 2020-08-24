@@ -50,8 +50,8 @@
   <div>
     <h3>Timeslots</h3>
     <div *ngFor="let timeslot of timeslots; last as isLast; let index=index">
-      <app-timeslot-view [(timeslot)]="timeslots[index]" *ngIf="!isLast" (onDelete)="deleteTimeslot(index)"></app-timeslot-view>
-      <app-timeslot-view [(timeslot)]="timeslots[index]" *ngIf="isLast" [edit]="true" (onDelete)="deleteTimeslot(index)"></app-timeslot-view>
+      <app-timeslot-view [(timeslot)]="timeslots[index]" *ngIf="!isLast" (delete)="deleteTimeslot(index)"></app-timeslot-view>
+      <app-timeslot-view [(timeslot)]="timeslots[index]" *ngIf="isLast" [edit]="true" (delete)="deleteTimeslot(index)"></app-timeslot-view>
     </div>
     <div class="icon-container">
       <svg viewBox="0 0 16 16" class="bi bi-plus-circle icon add" (click)="addTimeslot()" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AllSchedulesComponent } from './all-schedules/all-schedules.component';
 import { SchedulesModule } from '../schedules/schedules.module';
 import { CreateSchedulePageComponent } from './create-schedule-page/create-schedule-page.component';
+import { ModalsModule } from '../modals/modals.module';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { CreateSchedulePageComponent } from './create-schedule-page/create-sched
   ],
   imports: [
     CommonModule,
-    SchedulesModule
+    SchedulesModule,
+    ModalsModule
   ],
   exports: [
     AllSchedulesComponent,

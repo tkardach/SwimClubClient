@@ -40,7 +40,7 @@ export class TimeslotViewComponent implements OnInit {
   @Input() timeslot: ScheduleTimeslot;
   @Output() timeslotChange = new EventEmitter<ScheduleTimeslot>();
 
-  @Output() onDelete = new EventEmitter();
+  @Output() delete = new EventEmitter();
 
   @Input() edit: boolean = false;
 
