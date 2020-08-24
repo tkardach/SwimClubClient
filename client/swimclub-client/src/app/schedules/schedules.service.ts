@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 export interface ScheduleTimeslot {
+  _id: string,
   start: number,
   end: number,
   type: string,
@@ -41,10 +42,19 @@ export class SchedulesService {
   }
 
   putSchedule(id: string, schedule: Schedule) {
-    return this.http.put<Schedule>(this._url + id, schedule, {headers: this.headers}).toPromise()
+    const putSchedule = {
+      day: schedule.day,
+      startDate: schedule.startDate,
+      timeslots: schedule.timeslots.map(({_id, ...keepAttrs}) => keepAttrs)
+    }
+    return this.http.put<Schedule>(this._url + id, putSchedule, {headers: this.headers}).toPromise()
   }
 
   postScheduleArray(schedules: Array<Schedule>) {
     return this.http.post<any>(this._url + 'array', schedules, {headers: this.headers}).toPromise()
+  }
+
+  deleteSchedule(id: string) {
+    return this.http.delete<any>(this._url + id, {headers: this.headers}).toPromise()
   }
 }

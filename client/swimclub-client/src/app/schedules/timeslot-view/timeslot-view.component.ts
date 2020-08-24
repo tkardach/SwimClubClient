@@ -48,6 +48,7 @@ export class TimeslotViewComponent implements OnInit {
 
   constructor() { 
     this.timeslot = {
+      _id: '',
       start: 0,
       end: 0,
       maxOccupants: 1,

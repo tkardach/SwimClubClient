@@ -1,7 +1,8 @@
 <div *ngFor="let schedule of schedules; let index=index;">
   <app-schedule-view 
     [schedule]="schedule"
-    (save)="onSave()"
+    (save)="onSave(index)"
     (remove)="onRemove(index)"
+    (addTimeslot)="onAddTimeslot(index)"
     ></app-schedule-view>
 </div>

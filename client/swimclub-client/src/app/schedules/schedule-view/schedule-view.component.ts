@@ -12,6 +12,7 @@ export class ScheduleViewComponent implements OnInit {
 
   @Output() remove = new EventEmitter();
   @Output() save = new EventEmitter();
+  @Output() addTimeslot = new EventEmitter();
 
   constructor() {
     this.schedule = {

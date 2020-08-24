@@ -25,12 +25,29 @@ export class AllSchedulesComponent implements OnInit {
         this.schedules = response;
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error)
       });
   }
 
-  onSave() {
+  addTimeslot(index: number) {
+    const timeslot = {
+      _id: '',
+      start: 0,
+      end: 0,
+      type: 'family',
+      maxOccupants: 1 
+    };
+    this.schedules[index].timeslots.push(timeslot);
+  }
 
+  onSave(index: number) {
+    const schedule = this.schedules[index];
+    this._schedulesService.putSchedule(schedule._id, schedule)
+      .then((result) => {
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   removeSchedule(index: number) {
@@ -46,7 +63,13 @@ export class AllSchedulesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this.schedules.splice(index, 1);
+        this._schedulesService.deleteSchedule(this.schedules[index]._id)
+          .then((result) => {
+            this.schedules.splice(index, 1);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
       }
     });
   }

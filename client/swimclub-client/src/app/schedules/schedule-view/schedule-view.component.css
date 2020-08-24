@@ -14,3 +14,23 @@ button:focus, button:active:focus, button.active:focus {
   outline-style: none !important;
   border: none !important;
 }
+
+.icon-container {
+  text-align: center;
+  width: 100%;
+}
+.icon {
+  width: 4em;
+  height: 4em;
+}
+.icon.add {
+  color: rgb(73, 203, 226);
+  cursor: pointer;
+  padding: 10px;
+}
+.icon.add:hover {
+  color: rgb(59, 166, 185);
+}
+.icon.add:active {
+  color: rgb(52, 135, 150);
+}

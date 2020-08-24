@@ -38,6 +38,7 @@ export class CreateScheduleComponent implements OnInit {
 
   addTimeslot() {
     const timeslot = {
+      _id: '',
       start: 0,
       end: 0,
       type: 'family',
