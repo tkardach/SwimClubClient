@@ -4,20 +4,25 @@ import { AllSchedulesComponent } from './all-schedules/all-schedules.component';
 import { SchedulesModule } from '../schedules/schedules.module';
 import { CreateSchedulePageComponent } from './create-schedule-page/create-schedule-page.component';
 import { ModalsModule } from '../modals/modals.module';
+import { MakeReservationsComponent } from './make-reservations/make-reservations.component';
+import { ReservationsModule } from '../reservations/reservations.module';
 
 @NgModule({
   declarations: [
     AllSchedulesComponent,
-    CreateSchedulePageComponent
+    CreateSchedulePageComponent,
+    MakeReservationsComponent
   ],
   imports: [
     CommonModule,
     SchedulesModule,
-    ModalsModule
+    ModalsModule,
+    ReservationsModule
   ],
   exports: [
     AllSchedulesComponent,
-    CreateSchedulePageComponent
+    CreateSchedulePageComponent,
+    MakeReservationsComponent
   ]
 })
 export class PagesModule { }

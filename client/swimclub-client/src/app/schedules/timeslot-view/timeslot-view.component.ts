@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { ScheduleTimeslot } from '../schedules.service';
 import { EventEmitter } from '@angular/core';
+import { militaryTimeToString } from '../../shared/utilities';
 
 @Component({
   selector: 'app-timeslot-view',
@@ -58,15 +59,6 @@ export class TimeslotViewComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
-  militaryTimeToString(time: number): string {
-    if (time < 0 || time >= 2400) return "Invalid Time"
-
-    let hour = time / 100;
-    let minute = time % 100;
-
-    return `${hour % 12}:${minute == 0 ? "00":minute} ${hour >= 12 ? "PM":"AM"}`
-  }  
 
   convertTimeToString(time: number): string {
     if (time < 0 || time >= 2400) return "Invalid Time"

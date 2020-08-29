@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { SchedulesModule } from './schedules.module';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Timeslot } from '../reservations/reservations.service';
 
 
 export interface ScheduleTimeslot {
@@ -56,5 +57,9 @@ export class SchedulesService {
 
   deleteSchedule(id: string) {
     return this.http.delete<any>(this._url + id, {headers: this.headers}).toPromise()
+  }
+
+  getTimeslotsForDate(date: Date) {
+    return this.http.get<Array<Timeslot>>(this._url + 'timeslots/' + date, {headers: this.headers}).toPromise();
   }
 }

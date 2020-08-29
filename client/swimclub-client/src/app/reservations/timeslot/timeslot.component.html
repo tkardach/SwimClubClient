@@ -1,3 +1,7 @@
-<div [class]="type">
-  <button class="timeslot">{{durationString}</button>
+<div [class]="timeslot.type">
+  <button 
+    class="timeslot" 
+    [class.disabled]="!timeslot.vacant">
+    {{durationString()}}
+  </button>
 </div>

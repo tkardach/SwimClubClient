@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReservationsCalendarComponent } from './reservations-calendar/reservations-calendar.component';
 import { TimeslotComponent } from './timeslot/timeslot.component';
+import { MaterialModule } from '../material/material.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -11,7 +13,9 @@ import { TimeslotComponent } from './timeslot/timeslot.component';
     TimeslotComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule,
+    FormsModule
   ],
   exports: [
     ReservationsCalendarComponent,

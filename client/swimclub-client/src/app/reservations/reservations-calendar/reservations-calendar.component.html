@@ -1,0 +1,25 @@
+<div class="reservation-calendar">
+  <h2>Make a Reservation!</h2>
+
+  <form name="reservationTypeForm" class="switch-field">
+    <input class="family" id="family" type="radio" name="reservationType" value="family"
+      [(ngModel)]="familySwimming" 
+      (change)="onChecked()" 
+      [checked]="familySwimming === 'family'">
+    <label for="family">Family Swimming</label>
+    <input class="lap" id="lap" type="radio" name="reservationType" value="lap" 
+      [(ngModel)]="familySwimming" 
+      (change)="onChecked()" 
+      [checked]="familySwimming === 'lap'">
+    <label for="lap">Lap Swimming</label>
+  </form>
+  
+  <mat-calendar [selected]="selectedDate" (selectedChange)="onSelect($event)"></mat-calendar>
+  <div class="timeslots" *ngFor="let timeslot of timeslots; let index = index">
+    <app-timeslot 
+      (click)="onTimeslotClicked(index)" 
+      [timeslot]="timeslot"
+      [class.hidden]="familySwimming !== timeslot.type">
+    </app-timeslot>
+  </div>
+</div>

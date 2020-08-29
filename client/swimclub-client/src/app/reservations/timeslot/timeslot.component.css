@@ -20,19 +20,19 @@
   color: white;
 }
 
-.family .timeslot:hover:not([disabled]) {
+.family .timeslot:hover:not(.disabled) {
   background-color: white;
   color: #00AFF3;
 }
 
-.lap .timeslot:hover:not([disabled]) {
+.lap .timeslot:hover:not(.disabled) {
   background-color: white;
   color: #FF9300;
 }
 
-.timeslot:disabled {
-  background-color: rgb(150, 150, 150);
-  color: rgb(207, 207, 207);
+.disabled {
+  background-color: rgb(150, 150, 150)!important;
+  color: rgb(207, 207, 207)!important;
   cursor: default;
 }
 

@@ -7,6 +7,11 @@ export interface UserInfo {
   admin: boolean
 }
 
+export interface CheckSession {
+  sessionExists: boolean,
+  user: UserInfo
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,10 +20,28 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
 
-  public isAuthenticated() : boolean {
+  public async isAuthenticated() : Promise<boolean> {
+    try {
+      const checkSession = await this.checkSession();
+      console.log(checkSession)
+      return checkSession.sessionExists && this.isLoggedIn();
+    } catch {
+      console.log('TODO: Error check for isAuthenticated')
+    }
+  }
+
+  public isAdmin() : boolean {
     const userInfo = localStorage.getItem(this.userInfoString);
     const userJson: UserInfo = JSON.parse(userInfo); 
     if (userInfo && userJson && userJson.admin) 
+      return true;
+    return false;
+  }
+
+  public isLoggedIn() : boolean {
+    const userInfo = localStorage.getItem(this.userInfoString);
+    const userJson: UserInfo = JSON.parse(userInfo); 
+    if (userInfo && userJson) 
       return true;
     return false;
   }
@@ -37,5 +60,9 @@ export class AuthenticationService {
   
   public logout() {
     return this.http.get('/api/users/logout', {responseType: 'text'}).toPromise()
+  }
+
+  public checkSession() {
+    return this.http.get<CheckSession>('/api/users/session').toPromise()
   }
 }

@@ -8,6 +8,9 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatRadioModule } from '@angular/material/radio';
 
 const modules = [
   MatFormFieldModule,
@@ -17,7 +20,10 @@ const modules = [
   MatButtonModule,
   MatButtonToggleModule,
   MatCardModule,
-  MatDialogModule
+  MatDialogModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatRadioModule
 ];
 
 @NgModule({

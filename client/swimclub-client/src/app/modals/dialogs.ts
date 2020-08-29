@@ -22,3 +22,16 @@ export class ConfirmationDialog {
 
     }
 }
+
+@Component({
+  selector: 'reservation-confirmation-dialog',
+  templateUrl: './reservation-confirmation/reservation-confirmation-dialog.html',
+  styleUrls: ['./reservation-confirmation/reservation-confirmation-dialog.css']
+})
+export class ReservationConfirmationDialog {
+  numberOfSwimmers: number;
+
+  constructor(
+    public dialogRef: MatDialogRef<ReservationConfirmationDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: ConfirmationDialogData) {}
+}

@@ -21,13 +21,16 @@ export class LoginComponent implements OnInit {
   
   login() {
     this.authService.validate(this.userEmail, this.userPassword)
-    .then((response) => {
-      this.authService.setUserInfo({
-        email: response['email'],
-        admin: response['isAdmin']
-      });
-      this.router.navigate(['']);
-    })
+      .then((response) => {
+        this.authService.setUserInfo({
+          email: response['email'],
+          admin: response['isAdmin']
+        });
+        this.router.navigate(['']);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
 }
