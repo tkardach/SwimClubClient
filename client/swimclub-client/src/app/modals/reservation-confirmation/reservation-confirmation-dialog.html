@@ -1,13 +1,14 @@
-<h1 mat-dialog-title>{{data.title}}</h1>
-<div mat-dialog-content>
-  <p>{{data.content}}</p>
-  <mat-form-field>
-    <mat-label>Number of swimmers</mat-label>
-    <input matInput class="form-field number-picker" type="number" placeholder="1" min="1" max="2" [(ngModel)]="numberOfSwimmers">
-  </mat-form-field>
+<div class="reservation-confirm-content">
+  <h1 mat-dialog-title>{{data.title}}</h1>
+  <div mat-dialog-content>
+    <p>{{data.content}}</p>
+    <mat-form-field>
+      <mat-label>Number of swimmers</mat-label>
+      <input matInput class="form-field number-picker" type="number" placeholder="1" min="1" max="2" [(ngModel)]="numberOfSwimmers">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="center">
+    <button mat-button [mat-dialog-close]="numberOfSwimmers">{{data.confirmText}}</button>
+    <button mat-button [mat-dialog-close]="false">{{data.closeText}}</button>
+  </div>
 </div>
-<div mat-dialog-actions align="center">
-  <button mat-button [mat-dialog-close]="numberOfSwimmers">{{data.confirmText}}</button>
-  <button mat-button [mat-dialog-close]="false">{{data.closeText}}</button>
-</div>
-

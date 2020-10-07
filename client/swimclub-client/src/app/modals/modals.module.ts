@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { ConfirmationDialog, ReservationConfirmationDialog } from './dialogs';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule } from '@angular/forms';
+import { ModalComponent } from './modal/modal.component';
 
 
 
 @NgModule({
   declarations: [
     ConfirmationDialog,
-    ReservationConfirmationDialog
+    ReservationConfirmationDialog,
+    ModalComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { FormsModule } from '@angular/forms';
   ],
   exports: [
     ConfirmationDialog,
-    ReservationConfirmationDialog
+    ReservationConfirmationDialog,
+    ModalComponent
   ]
 })
 export class ModalsModule { }

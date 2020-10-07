@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent, LoginDialog } from './login/login.component';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule } from '@angular/forms';
 
@@ -8,7 +8,8 @@ import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    LoginDialog
   ],
   imports: [
     CommonModule,
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     MaterialModule
   ],
   exports: [
-    LoginComponent
+    LoginComponent,
+    LoginDialog
   ]
 })
 export class AuthenticationModule { }

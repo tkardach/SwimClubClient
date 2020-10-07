@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { MatDialog, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,11 +36,16 @@ import { PagesModule } from './pages/pages.module';
     SchedulesModule,
     FormsModule,
     AuthenticationModule,
-    PagesModule
+    PagesModule,
+    MatDialogModule
   ],
   providers: [
     AuthGuard,
-    HttpClient
+    HttpClient,
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    }
   ],
   bootstrap: [AppComponent]
 })

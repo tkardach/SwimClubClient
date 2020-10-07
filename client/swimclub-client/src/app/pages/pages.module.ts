@@ -6,6 +6,10 @@ import { CreateSchedulePageComponent } from './create-schedule-page/create-sched
 import { ModalsModule } from '../modals/modals.module';
 import { MakeReservationsComponent } from './make-reservations/make-reservations.component';
 import { ReservationsModule } from '../reservations/reservations.module';
+import { AuthenticationModule } from '../authentication/authentication.module';
+import { MaterialModule } from '../material/material.module';
+import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,11 @@ import { ReservationsModule } from '../reservations/reservations.module';
     CommonModule,
     SchedulesModule,
     ModalsModule,
-    ReservationsModule
+    MaterialModule,
+    FormsModule,
+    ReservationsModule,
+    AuthenticationModule,
+    SharedModule
   ],
   exports: [
     AllSchedulesComponent,

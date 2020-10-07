@@ -3,6 +3,15 @@ import { ReservationsModule } from './reservations.module';
 import { environment } from 'src/environments/environment';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 
+export interface Event {
+  attendees: Array<string>,
+  description: string,
+  end: Date,
+  start: Date,
+  lastName: string,
+  summary: number
+}
+
 export interface Timeslot {
   vacant: boolean,
   start: number,

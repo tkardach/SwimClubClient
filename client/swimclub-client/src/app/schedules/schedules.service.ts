@@ -60,6 +60,6 @@ export class SchedulesService {
   }
 
   getTimeslotsForDate(date: Date) {
-    return this.http.get<Array<Timeslot>>(this._url + 'timeslots/' + date, {headers: this.headers}).toPromise();
+    return this.http.get<Array<Timeslot>>(this._url + 'timeslots/' + date.getTime(), {headers: this.headers}).toPromise();
   }
 }

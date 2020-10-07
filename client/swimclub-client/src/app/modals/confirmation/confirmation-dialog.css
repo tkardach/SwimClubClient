@@ -4,3 +4,8 @@ button:focus, button:active:focus, button.active:focus {
   outline-style: none !important;
   border: none !important;
 }
+
+.confirm-content {
+  text-align: center;
+  padding: 25px;
+}
