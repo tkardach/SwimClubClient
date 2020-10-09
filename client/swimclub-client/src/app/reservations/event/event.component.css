@@ -1,0 +1,19 @@
+.event {
+  display: table-cell;
+  border-radius: 15px;
+  width: 250px;
+  padding: 20px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+.family {
+  background-color: #00AFF3;
+  color: white;
+}
+  
+.lap {
+  background-color: #FF9300;
+  color: white;
+}

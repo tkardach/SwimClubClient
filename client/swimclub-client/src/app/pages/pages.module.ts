@@ -10,12 +10,16 @@ import { AuthenticationModule } from '../authentication/authentication.module';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { EventsViewComponent } from './events-view/events-view.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AllSchedulesComponent,
     CreateSchedulePageComponent,
-    MakeReservationsComponent
+    MakeReservationsComponent,
+    EventsViewComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +34,9 @@ import { SharedModule } from '../shared/shared.module';
   exports: [
     AllSchedulesComponent,
     CreateSchedulePageComponent,
-    MakeReservationsComponent
+    MakeReservationsComponent,
+    EventsViewComponent,
+    ProfileComponent
   ]
 })
 export class PagesModule { }

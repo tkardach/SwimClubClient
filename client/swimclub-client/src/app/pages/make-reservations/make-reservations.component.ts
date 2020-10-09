@@ -50,7 +50,9 @@ export class MakeReservationsComponent implements OnInit {
     this.getTimeslotsForDate();
   }
 
-  onTimeslotClicked(timeslot: Timeslot) {
+  async onTimeslotClicked(timeslot: Timeslot) {
+    await this.checkAuthenticated();
+
     if (!this.loggedIn) {
       this.showLoginModal(timeslot);
       return;
@@ -107,7 +109,7 @@ export class MakeReservationsComponent implements OnInit {
         this._reservationService.postReservation(postTimeslot)
           .then((response: Event) => {
             console.log(response);
-            this.reservationString(response, postTimeslot.numberSwimmers)
+            this.showReservationConfirmation(this.reservationString(response, postTimeslot.numberSwimmers));
           })
           .catch((error) => {
             console.log(error)
@@ -131,8 +133,8 @@ export class MakeReservationsComponent implements OnInit {
         this._spinnerService.show();
         this._reservationService.postReservation(postTimeslot)
           .then((response: Event) => {
-            this.showReservationConfirmation(this.reservationString(response, postTimeslot.numberSwimmers));
             console.log(response);
+            this.showReservationConfirmation(this.reservationString(response, postTimeslot.numberSwimmers));
           })
           .catch((error) => {
             console.log(error)
@@ -146,7 +148,9 @@ export class MakeReservationsComponent implements OnInit {
   }
 
   reservationString(event: Event, numberSwimmers: number) {
-    let string =  ` for ${event.start.toLocaleDateString()} from ${event.start.toLocaleTimeString()} to ${event.end.toLocaleTimeString()}`;
+    let start = new Date(event.start.dateTime);
+    let end = new Date(event.end.dateTime);
+    let string =  ` for ${start.toLocaleDateString()} from ${start.toLocaleTimeString()} to ${end.toLocaleTimeString()}`;
     if (numberSwimmers > 1) {
       return `${numberSwimmers} reservations made ${string}`;
     }

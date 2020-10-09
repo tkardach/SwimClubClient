@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Event } from '../reservations/reservations.service';
 
 
 export interface UserInfo {
@@ -10,6 +11,14 @@ export interface UserInfo {
 export interface CheckSession {
   sessionExists: boolean,
   user: UserInfo
+}
+
+export interface UserProfile {
+  user: {
+    lastName: string,
+    certificateNumber: string
+  },
+  events: Array<Event>
 }
 
 @Injectable({
@@ -60,6 +69,10 @@ export class AuthenticationService {
   
   public logout() {
     return this.http.get('/api/users/logout', {responseType: 'text'}).toPromise()
+  }
+
+  public userProfile() {
+    return this.http.get<UserProfile>('/api/users/me').toPromise()
   }
 
   public checkSession() {

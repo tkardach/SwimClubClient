@@ -4,13 +4,17 @@ import { ReservationsCalendarComponent } from './reservations-calendar/reservati
 import { TimeslotComponent } from './timeslot/timeslot.component';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule } from '@angular/forms';
+import { EventComponent } from './event/event.component';
+import { DayEventsComponent } from './day-events/day-events.component';
 
 
 
 @NgModule({
   declarations: [
     ReservationsCalendarComponent, 
-    TimeslotComponent
+    TimeslotComponent, 
+    EventComponent, 
+    DayEventsComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +23,9 @@ import { FormsModule } from '@angular/forms';
   ],
   exports: [
     ReservationsCalendarComponent,
-    TimeslotComponent
+    TimeslotComponent,
+    EventComponent,
+    DayEventsComponent
   ]
 })
 export class ReservationsModule { }

@@ -6,6 +6,7 @@ import { AuthGuard } from './authentication/authentication.guard';
 import { AllSchedulesComponent } from './pages/all-schedules/all-schedules.component';
 import { CreateSchedulePageComponent } from './pages/create-schedule-page/create-schedule-page.component';
 import { MakeReservationsComponent } from './pages/make-reservations/make-reservations.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: '', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'schedules', component: AllSchedulesComponent, canActivate: [AuthGuard]},
   {path: 'create-schedule', component: CreateSchedulePageComponent, canActivate: [AuthGuard]},
-  {path: 'make-reservations', component: MakeReservationsComponent}
+  {path: 'make-reservations', component: MakeReservationsComponent},
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

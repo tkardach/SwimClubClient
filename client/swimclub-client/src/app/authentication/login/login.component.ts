@@ -69,6 +69,7 @@ export class LoginDialog {
     }
 
   onLogin() {
+    this.error = "";
     this._service.validate(this.email, this.password)
       .then((response) => {
         this._service.setUserInfo({

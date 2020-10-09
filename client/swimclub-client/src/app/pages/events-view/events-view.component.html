@@ -1,0 +1,7 @@
+<div class="container day-view-container">
+  <div class="day-view" *ngFor="let events of daysEvents">
+    <app-day-events 
+      [events]="events"
+      [date]="events[0]?.start.dateTime"></app-day-events>
+  </div>
+</div>

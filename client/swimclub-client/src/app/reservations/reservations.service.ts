@@ -6,8 +6,14 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 export interface Event {
   attendees: Array<string>,
   description: string,
-  end: Date,
-  start: Date,
+  end: {
+    dateTime: Date,
+    timeZone: string
+  },
+  start:  {
+    dateTime: Date,
+    timeZone: string
+  },
   lastName: string,
   summary: number
 }
