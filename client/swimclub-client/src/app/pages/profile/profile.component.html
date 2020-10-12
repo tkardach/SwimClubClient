@@ -1,3 +1,7 @@
-<app-events-view
- [events]="userProfile?.events">
-</app-events-view>
+<div class="event-container">
+  <h1 *ngIf="userProfile">Welcome {{userProfile?.user.lastName}} Family!</h1>
+  <h2>Upcoming Reservations</h2>
+  <app-events-view
+  [events]="userProfile?.events">
+ </app-events-view>
+</div>

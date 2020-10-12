@@ -1,3 +1,6 @@
+.dropdown-item {
+  cursor: pointer;
+}
 
 .nav-item{
   padding:2px;

@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 export interface Event {
+  id: string,
   attendees: Array<string>,
   description: string,
   end: {
@@ -38,7 +39,7 @@ export interface PostTimeslot {
   providedIn: ReservationsModule
 })
 export class ReservationsService {
-  private readonly _url: string = environment.apiUrl + '/reservations';
+  private readonly _url: string = environment.apiUrl + '/reservations/';
   
   headers: HttpHeaders = new HttpHeaders()
     .set('Content-Type', 'application/json');
@@ -47,5 +48,9 @@ export class ReservationsService {
 
   postReservation(timeslot: PostTimeslot) {
     return this.http.post<any>(this._url, timeslot, {headers: this.headers, withCredentials: true}).toPromise();
+  }
+
+  deleteReservation(id: string) {
+    return this.http.delete<any>(this._url + id, {headers: this.headers, withCredentials: true}).toPromise();
   }
 }

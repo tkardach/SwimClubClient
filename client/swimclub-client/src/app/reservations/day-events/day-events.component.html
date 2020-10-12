@@ -1,7 +1,10 @@
 <div class="container day-event">
   <h4>{{getWeekdayString()}}</h4>
   <h4>{{getDateString()}}</h4>
-  <div *ngFor="let event of events">
-    <app-event [event]="event"></app-event>
+  <div *ngFor="let event of events; let index=index">
+    <app-event 
+      [event]="event"
+      (click)="onRemoveEvent(index)"
+      ></app-event>
   </div>
 </div>

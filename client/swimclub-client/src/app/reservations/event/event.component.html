@@ -1,3 +1,7 @@
-<div class="event" [ngClass]="event.description==='family' ? 'family' : 'lap'">
-    {{contentString()}}
+<div 
+    class="event" 
+    (mouseover)="hover=true"
+    (mouseleave)="hover=false"
+    [ngClass]="hover ? 'remove' : event.description==='family' ? 'family' : 'lap'">
+    {{hover ? "Remove" : contentString()}}
 </div>

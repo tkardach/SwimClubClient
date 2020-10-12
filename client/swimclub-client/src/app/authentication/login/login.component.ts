@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -13,10 +13,14 @@ export class LoginComponent implements OnInit {
   error: string = '';
   userEmail: string = '';
   userPassword: string = '';
+  desiredRoute: string = '';
   
   constructor(
     private authService: AuthenticationService, 
-    private router : Router) { }
+    private router : Router,
+    private route: ActivatedRoute) {
+      this.desiredRoute = this.route.snapshot.paramMap.get('route');
+    }
 
   ngOnInit(): void {
   }  
@@ -28,7 +32,10 @@ export class LoginComponent implements OnInit {
           email: response['email'],
           admin: response['isAdmin']
         });
-        this.router.navigate(['']);
+        if (this.desiredRoute)
+          this.router.navigate([this.desiredRoute])
+        else
+          this.router.navigate(['']);
       })
       .catch((error) => {
         console.log(error);

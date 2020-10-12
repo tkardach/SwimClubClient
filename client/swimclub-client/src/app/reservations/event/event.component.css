@@ -3,10 +3,10 @@
   border-radius: 15px;
   width: 250px;
   padding: 20px;
+  cursor: pointer;
   text-align: center;
   vertical-align: middle;
 }
-
 
 .family {
   background-color: #00AFF3;
@@ -15,5 +15,10 @@
   
 .lap {
   background-color: #FF9300;
+  color: white;
+}
+
+.remove {
+  background-color: rgb(255, 43, 43);
   color: white;
 }

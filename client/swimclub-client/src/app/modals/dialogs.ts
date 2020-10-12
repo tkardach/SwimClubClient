@@ -6,7 +6,8 @@ export interface ConfirmationDialogData {
   title: string,
   content: string,
   confirmText: string,
-  closeText: string
+  closeText: string,
+  showClose: boolean
 }
 
 @Component({

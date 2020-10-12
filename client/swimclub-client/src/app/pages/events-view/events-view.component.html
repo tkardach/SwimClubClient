@@ -2,6 +2,7 @@
   <div class="day-view" *ngFor="let events of daysEvents">
     <app-day-events 
       [events]="events"
-      [date]="events[0]?.start.dateTime"></app-day-events>
+      [date]="events[0]?.start.dateTime"
+      (eventRemove)="onEventRemoved($event)"></app-day-events>
   </div>
 </div>

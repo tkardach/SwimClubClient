@@ -32,7 +32,6 @@ export class AuthenticationService {
   public async isAuthenticated() : Promise<boolean> {
     try {
       const checkSession = await this.checkSession();
-      console.log(checkSession)
       return checkSession.sessionExists && this.isLoggedIn();
     } catch {
       console.log('TODO: Error check for isAuthenticated')

@@ -5,7 +5,7 @@
   </div>
   <div mat-dialog-actions align="center">
     <button mat-button [mat-dialog-close]="true">{{data.confirmText}}</button>
-    <button mat-button [mat-dialog-close]="false">{{data.closeText}}</button>
+    <button mat-button [mat-dialog-close]="false" *ngIf="data.showClose">{{data.closeText}}</button>
   </div>
 </div>
 

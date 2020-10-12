@@ -11,6 +11,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
+  {path: 'login/:route', component: LoginComponent},
   {path: '', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'schedules', component: AllSchedulesComponent, canActivate: [AuthGuard]},
   {path: 'create-schedule', component: CreateSchedulePageComponent, canActivate: [AuthGuard]},

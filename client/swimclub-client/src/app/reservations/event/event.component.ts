@@ -7,6 +7,8 @@ import { Event } from '../reservations.service';
   styleUrls: ['./event.component.css']
 })
 export class EventComponent implements OnInit {
+  hover: boolean = false;
+
   @Input() event: Event = null;
 
   constructor() { }

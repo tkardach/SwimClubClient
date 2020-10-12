@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { weekdayToString, compareDate, getValidDate } from '../../shared/utilities';
 import { Event } from '../reservations.service';
 
@@ -8,6 +8,8 @@ import { Event } from '../reservations.service';
   styleUrls: ['./day-events.component.css']
 })
 export class DayEventsComponent implements OnInit {
+  @Output() eventRemove = new EventEmitter<string>();
+
   private _date: Date;
   @Input() set date(date: Date) {
     this._date = getValidDate(date);
@@ -37,6 +39,10 @@ export class DayEventsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onRemoveEvent(index: number) {
+    this.eventRemove.emit(this.events[index].id);
   }
   
   getWeekdayString() {

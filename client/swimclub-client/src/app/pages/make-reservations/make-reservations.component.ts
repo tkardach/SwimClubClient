@@ -73,7 +73,8 @@ export class MakeReservationsComponent implements OnInit {
       title: 'Confirm Reseration',
       content: message,
       confirmText: 'Confirm',
-      closeText: 'Cancel'
+      closeText: 'Cancel',
+      showClose: true
     }
 
     if (timeslot.type === 'family')
@@ -162,7 +163,8 @@ export class MakeReservationsComponent implements OnInit {
       title: 'Reservation Confirmed!',
       content: message,
       confirmText: 'Ok',
-      closeText: 'Close'
+      closeText: 'Close',
+      showClose: false
     }
 
     this.dialog.open(ConfirmationDialog, {
@@ -175,7 +177,8 @@ export class MakeReservationsComponent implements OnInit {
       title: 'Reservation Not Made!',
       content: message,
       confirmText: 'Ok',
-      closeText: 'Close'
+      closeText: 'Close',
+      showClose: false
     }
 
     this.dialog.open(ConfirmationDialog, {

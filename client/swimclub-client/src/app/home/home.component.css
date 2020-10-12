@@ -1,0 +1,17 @@
+.home {
+  text-align: center;
+  margin: 20px;
+}
+
+.option {
+  color: rgb(124, 124, 124);
+  margin: 15px;
+  padding: 10px;
+  font-size: 1.5em;
+}
+
+button:focus, button:active:focus, button.active:focus {
+  outline: 0 !important;
+  outline-style: none !important;
+  border: none !important;
+}
