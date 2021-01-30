@@ -48,7 +48,7 @@ export class MessageDialog {
   styleUrls: ['./reservation-confirmation/reservation-confirmation-dialog.css']
 })
 export class ReservationConfirmationDialog {
-  numberOfSwimmers: number;
+  numberOfSwimmers: number = 1;
 
   constructor(
     public dialogRef: MatDialogRef<ReservationConfirmationDialog>,

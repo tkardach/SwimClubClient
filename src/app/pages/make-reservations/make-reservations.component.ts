@@ -161,9 +161,9 @@ export class MakeReservationsComponent implements OnInit {
           (error) => {
             console.log(error)
             this.showReservationFailure(error.error.message)
-          },
-          () => {
+          }).add(() => {
             this._spinnerService.hide();
+            this.getTimeslotsForDate();
           })
       }
     });
@@ -186,9 +186,9 @@ export class MakeReservationsComponent implements OnInit {
           (error) => {
             console.log(error)
             this.showReservationFailure(error.error.message)
-          },
-          () => {
+          }).add(() => {
             this._spinnerService.hide();
+            this.getTimeslotsForDate();
           })
       }
     });
