@@ -33,6 +33,12 @@
       <li class="nav-item user-logged-out navbar-right" [class.hide]="loggedIn()">
         <a class="nav-link" routerLink="login">Login</a>
       </li>
+      <li class="nav-item user-logged-out navbar-right" [class.hide]="loggedIn()">
+        <a class="nav-link" routerLink="create-account">Create Account</a>
+      </li>
+      <li class="nav-item user-logged-out navbar-right" [class.hide]="loggedIn()">
+        <a class="nav-link" routerLink="forgot-password">Forgot Password</a>
+      </li>
       <li class="nav-item user-logged-in navbar-right" [class.hide]="!loggedIn()">
         <a class="nav-link" routerLink="profile">My Account</a>
       </li>

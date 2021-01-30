@@ -2,18 +2,42 @@ import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular
 import { AuthenticationService } from '../authentication.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css', '../authentication.css']
 })
 export class LoginComponent implements OnInit {
   hide: boolean = true;
   error: string = '';
-  userEmail: string = '';
-  userPassword: string = '';
   desiredRoute: string = '';
+  
+  private _email: string = '';
+  @Input() set email(email: string) {
+    this._email = email;
+    this.loginForm.patchValue({ 'email': this._email });
+  }
+  get email() : string {
+    return this._email;
+  }
+
+  private _password: string ='';
+  @Input() set password(password: string) {
+    this._password = password;
+    this.loginForm.patchValue({ 'password': this._password });
+  }
+  get password() : string {
+    return this._password;
+  }
+
+  // Form Controls
+  loginForm = new FormGroup({
+    email: new FormControl(this.email, [Validators.required]),
+    password: new FormControl(this.password, [Validators.required])
+  });
+
   
   constructor(
     private authService: AuthenticationService, 
@@ -25,27 +49,38 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }  
   
-  login() {
-    this.authService.validate(this.userEmail, this.userPassword)
-      .then((response) => {
-        this.authService.setUserInfo({
-          email: response['email'],
-          admin: response['isAdmin']
-        });
-        if (this.desiredRoute)
-          this.router.navigate([this.desiredRoute])
-        else
-          this.router.navigate(['']);
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error.error instanceof Object)
-          this.error = error.error.message;
-        else
-          this.error = error.error;
-      })
+  onLogin(form: FormGroup) {
+    if (this.loginForm.invalid) return;
+
+    this.authService.validate(form.value.email, form.value.password)
+      .subscribe(
+        response => {
+          this.authService.setUserInfo({
+            email: response['email'],
+            admin: response['isAdmin']
+          });
+          if (this.desiredRoute)
+            this.router.navigate([this.desiredRoute])
+          else
+            this.router.navigate(['']);
+        },
+        error => {
+          console.log(error);
+          if (error.error instanceof Object)
+            this.error = error.error.message;
+          else
+            this.error = error.error;
+        }
+      )
   }
 
+  createAccount() {
+    this.router.navigate(['/create-account']);
+  }
+
+  forgotPassword() {
+    this.router.navigate(['/forgot-password']);
+  }
 }
 
 export interface LoginDialogData {
@@ -55,19 +90,25 @@ export interface LoginDialogData {
 @Component({
   selector: 'login-dialog',
   templateUrl: './login-dialog.html',
-  styleUrls: ['./login-dialog.css']
+  styleUrls: ['./login-dialog.css', '../authentication.css']
 })
 export class LoginDialog {
   hide: boolean = true;
   error: string = '';
+  email: string = '';
+  password: string = '';
 
-  @Input() email: string = '';
-  @Output() emailChange = new EventEmitter<string>();
-
-  @Input() password: string = '';
-  @Output() passwordChange = new EventEmitter<string>();
+  @Output() createAccount = new EventEmitter();
+  @Output() forgotPassword = new EventEmitter();
 
   private _service: AuthenticationService;
+  
+
+  // Form Controls
+  loginForm = new FormGroup({
+    email: new FormControl(this.email, [Validators.required]),
+    password: new FormControl(this.password, [Validators.required])
+  });
 
   constructor(
     public dialogRef: MatDialogRef<LoginDialog>,
@@ -75,23 +116,33 @@ export class LoginDialog {
       this._service = data.loginService;
     }
 
-  onLogin() {
+  onLogin(form: FormGroup) {
+    if (this.loginForm.invalid) return;
+
     this.error = "";
-    this._service.validate(this.email, this.password)
-      .then((response) => {
+    this._service.validate(form.value.email, form.value.password).subscribe(
+      response => {
         this._service.setUserInfo({
           email: response['email'],
           admin: response['isAdmin']
         });
         this.dialogRef.close(true);
-      })
-      .catch((error) => {
+      },
+      error => {
         console.log(error);
         if (error.error instanceof Object)
           this.error = error.error.message;
         else
           this.error = error.error;
-      })
+      }
+    )
   }
 
+  onCreateAccount() {
+    this.createAccount.emit();
+  }
+
+  onForgotPassword() {
+    this.forgotPassword.emit();
+  }
 }

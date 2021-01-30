@@ -1,10 +1,11 @@
 
-.create-account {
-  margin-bottom: 15px;
-}
-
 button:focus, button:active:focus, button.active:focus {
   outline: 0 !important;
   outline-style: none !important;
   border: none !important;
+}
+
+.confirm-content {
+  text-align: center;
+  padding: 25px;
 }

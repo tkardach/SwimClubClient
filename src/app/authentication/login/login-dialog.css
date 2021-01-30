@@ -1,16 +1,4 @@
 
-.login-container {
-  display: block;
-  text-align: center;
-  padding: 25px;
-}
-
-.login-container mat-form-field {
-  width: 250px;
-}
-
-button:focus, button:active:focus, button.active:focus {
-  outline: 0 !important;
-  outline-style: none !important;
-  border: none !important;
+.login-action {
+  margin-bottom: 5px;
 }

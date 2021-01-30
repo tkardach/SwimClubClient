@@ -1,0 +1,44 @@
+.authentication-container {
+  display: block;
+  text-align: center;
+  margin: 40px auto;
+}
+.authentication-container mat-form-field {
+  width: 250px;
+}
+.authentication-main-button {
+  background-color: rgb(79, 182, 79);
+  color: white;
+}
+.authentication-secondary-button {
+  background-color: rgb(79, 153, 182);
+  color: white;
+}
+
+button:focus, button:active:focus, button.active:focus {
+  outline: 0 !important;
+  outline-style: none !important;
+  border: none !important;
+}
+
+.auth-dialog-container {
+  display: block;
+  text-align: center;
+  padding: 15px;
+}
+
+.auth-dialog-container mat-form-field {
+  width: 90%;
+}
+
+.auth-dialog-action {
+  margin-bottom: 5px;
+}
+
+@media (min-width: 650px) {
+  .auth-dialog-container {
+    display: block;
+    text-align: center;
+    padding: 15px 40px;
+  }
+}

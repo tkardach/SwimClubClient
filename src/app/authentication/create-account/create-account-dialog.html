@@ -1,0 +1,40 @@
+<div class="auth-dialog-container">
+  <form [formGroup]="createAccountForm" (ngSubmit)="onCreateAccount(createAccountForm)">
+    <h1 mat-dialog-title>Create Account</h1>
+    <div mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input 
+          matInput 
+          id="email"
+          formControlName="email"
+          type="text" >
+          <mat-error  *ngIf="createAccountForm.controls.email.hasError('required')">Email required!</mat-error>
+      </mat-form-field><br>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input 
+          matInput 
+          id="password"
+          formControlName="password"
+          type="password">
+        <mat-error  *ngIf="createAccountForm.controls.password.hasError('required')">Password required!</mat-error>
+      </mat-form-field><br>
+      <mat-form-field>
+        <mat-label>Verify Password</mat-label>
+        <input 
+          matInput 
+          id="verifyPassword"
+          formControlName="verifyPassword"
+          type="password">
+        <mat-error  *ngIf="createAccountForm.controls.verifyPassword.hasError('required')">Password required!</mat-error>
+        <mat-error  *ngIf="createAccountForm.controls.verifyPassword.hasError('invalid')">Passwords do not match!</mat-error>
+      </mat-form-field><br>
+    </div>
+    <div mat-dialog-actions align="center" class="auth-dialog-action">
+      <button mat-button type="submit">Reset Password</button>
+    </div>
+    <br>
+    <p>{{error}}</p>
+  </form>
+</div>

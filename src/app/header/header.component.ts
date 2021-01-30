@@ -26,10 +26,10 @@ export class HeaderComponent implements OnInit {
 
   logout(): void {
     this.authService.logout()
-    .then(() => {
-      this.authService.unsetUserInfo();
-      this.router.navigate(['']);
-    });
+      .then(() => {
+        this.authService.unsetUserInfo();
+        this.router.navigate(['/login']);
+      });
   }
 
 }

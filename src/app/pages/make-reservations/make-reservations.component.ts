@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { SchedulesService } from 'src/app/schedules/schedules.service';
 import { Timeslot, ReservationsService, PostTimeslot, Event } from 'src/app/reservations/reservations.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ConfirmationDialog, ReservationConfirmationDialog, ConfirmationDialogData } from 'src/app/modals/dialogs';
+import { ConfirmationDialog, ReservationConfirmationDialog, ConfirmationDialogData, MessageDialog, MessageDialogData } from 'src/app/modals/dialogs';
 import { militaryTimeToString } from '../../shared/utilities';
 import { AuthenticationService } from 'src/app/authentication/authentication.service';
 import { LoginDialog, LoginDialogData } from 'src/app/authentication/login/login.component';
 import { SpinnerOverlayService } from 'src/app/shared/spinner-overlay.service';
+import { CreateAccountDialogData, CreateAccountDialog } from 'src/app/authentication/create-account/create-account.component';
+import { ForgotPasswordDialogData, ForgotPasswordDialog } from 'src/app/authentication/forgot-password/forgot-password.component';
 
 @Component({
   selector: 'app-make-reservations',
@@ -91,6 +93,50 @@ export class MakeReservationsComponent implements OnInit {
       data: data
     });
 
+    dialogRef.componentInstance.forgotPassword.subscribe(
+      () => {
+        dialogRef.close();
+
+        const data: ForgotPasswordDialogData = {
+          authService: this._authenticationService
+        }
+        const forgotPasswordDialog = this.dialog.open(ForgotPasswordDialog, {
+          data: data
+        });
+
+        forgotPasswordDialog.afterClosed().subscribe(
+          result => {
+            if (result) {
+              const messageData: MessageDialogData = {content: 'Password reset email has been sent'}
+              this.dialog.open(MessageDialog, {data: messageData});
+            }
+          }
+        )
+      }
+    )
+
+    dialogRef.componentInstance.createAccount.subscribe(
+      () => {
+        dialogRef.close();
+
+        const data: CreateAccountDialogData = {
+          authService: this._authenticationService
+        }
+        const createAccountDialog = this.dialog.open(CreateAccountDialog, {
+          data: data
+        });
+
+        createAccountDialog.afterClosed().subscribe(
+          async result => {
+            if (result) {
+              await this.checkAuthenticated();
+              this.onTimeslotClicked(timeslot);
+            }
+          }
+        )
+      }
+    )
+
     dialogRef.afterClosed().subscribe(async (result: boolean) => {
       if (result) {
         await this.checkAuthenticated();
@@ -107,16 +153,16 @@ export class MakeReservationsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this._spinnerService.show();
-        this._reservationService.postReservation(postTimeslot)
-          .then((response: Event) => {
+        this._reservationService.postReservation(postTimeslot).subscribe(
+          (response: Event) => {
             console.log(response);
             this.showReservationConfirmation(this.reservationString(response, postTimeslot.numberSwimmers));
-          })
-          .catch((error) => {
+          },
+          (error) => {
             console.log(error)
             this.showReservationFailure(error.error.message)
-          })
-          .finally(() => {
+          },
+          () => {
             this._spinnerService.hide();
           })
       }
@@ -132,16 +178,16 @@ export class MakeReservationsComponent implements OnInit {
       if (typeof result == 'number') {
         postTimeslot.numberSwimmers = result;
         this._spinnerService.show();
-        this._reservationService.postReservation(postTimeslot)
-          .then((response: Event) => {
+        this._reservationService.postReservation(postTimeslot).subscribe(
+          (response: Event) => {
             console.log(response);
             this.showReservationConfirmation(this.reservationString(response, postTimeslot.numberSwimmers));
-          })
-          .catch((error) => {
+          },
+          (error) => {
             console.log(error)
             this.showReservationFailure(error.error.message)
-          })
-          .finally(() => {
+          },
+          () => {
             this._spinnerService.hide();
           })
       }

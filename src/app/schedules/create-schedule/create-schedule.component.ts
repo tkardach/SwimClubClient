@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Schedule, ScheduleTimeslot } from '../schedules.service';
+import { CreateSchedule, CreateScheduleTimeslot } from '../schedules.service';
 
 @Component({
   selector: 'app-create-schedule',
@@ -7,12 +7,12 @@ import { Schedule, ScheduleTimeslot } from '../schedules.service';
   styleUrls: ['./create-schedule.component.css']
 })
 export class CreateScheduleComponent implements OnInit {
-  @Input() schedules: Array<Schedule> = []; 
-  @Output() schedulesChange = new EventEmitter<Array<Schedule>>();
+  @Input() schedules: Array<CreateSchedule> = []; 
+  @Output() schedulesChange = new EventEmitter<Array<CreateSchedule>>();
 
   @Output() onSubmit = new EventEmitter();
 
-  timeslots: Array<ScheduleTimeslot> = [];
+  timeslots: Array<CreateScheduleTimeslot> = [];
 
   invalidDays: boolean = false;
   invalidDate: boolean = false;
@@ -38,7 +38,6 @@ export class CreateScheduleComponent implements OnInit {
 
   addTimeslot() {
     const timeslot = {
-      _id: '',
       start: 0,
       end: 0,
       type: 'family',
@@ -52,7 +51,6 @@ export class CreateScheduleComponent implements OnInit {
     if (filtered.length > 0) return;
 
     this.schedules.push({
-      _id: '',
       day: day,
       timeslots: this.timeslots,
       startDate: new Date(this.date)

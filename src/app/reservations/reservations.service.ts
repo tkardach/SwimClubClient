@@ -47,7 +47,7 @@ export class ReservationsService {
   constructor(private http: HttpClient) { }
 
   postReservation(timeslot: PostTimeslot) {
-    return this.http.post<any>(this._url, timeslot, {headers: this.headers, withCredentials: true}).toPromise();
+    return this.http.post<any>(this._url, timeslot, {headers: this.headers, withCredentials: true});
   }
 
   deleteReservation(id: string) {

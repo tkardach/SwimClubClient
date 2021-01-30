@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Schedule, SchedulesService } from 'src/app/schedules/schedules.service';
+import { Schedule, SchedulesService, CreateSchedule } from 'src/app/schedules/schedules.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-schedule-page',
@@ -7,17 +8,20 @@ import { Schedule, SchedulesService } from 'src/app/schedules/schedules.service'
   styleUrls: ['./create-schedule-page.component.css']
 })
 export class CreateSchedulePageComponent implements OnInit {
-  schedules: Array<Schedule> = [];
+  schedules: Array<CreateSchedule> = [];
 
-  constructor(private _schedulesService: SchedulesService) { }
+  constructor(
+    private _schedulesService: SchedulesService,
+    private _router: Router) { }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-    this._schedulesService.postScheduleArray(this.schedules)
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error))
+    this._schedulesService.postScheduleArray(this.schedules).subscribe(
+      response => this._router.navigate(['/schedules']),
+      error => console.log(error)
+    )
   }
 
 }

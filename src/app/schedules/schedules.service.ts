@@ -20,6 +20,19 @@ export interface Schedule {
   timeslots: ScheduleTimeslot[]
 }
 
+export interface CreateSchedule {
+  day: number,
+  startDate: Date,
+  timeslots: CreateScheduleTimeslot[]
+}
+
+export interface CreateScheduleTimeslot {
+  start: number,
+  end: number,
+  type: string,
+  maxOccupants: number
+}
+
 
 @Injectable({
   providedIn: SchedulesModule
@@ -51,8 +64,8 @@ export class SchedulesService {
     return this.http.put<Schedule>(this._url + id, putSchedule, {headers: this.headers}).toPromise()
   }
 
-  postScheduleArray(schedules: Array<Schedule>) {
-    return this.http.post<any>(this._url + 'array', schedules, {headers: this.headers}).toPromise()
+  postScheduleArray(schedules: Array<CreateSchedule>) {
+    return this.http.post<any>(this._url + 'array', schedules, {headers: this.headers})
   }
 
   deleteSchedule(id: string) {

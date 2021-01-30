@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SpinnerOverlayComponent } from './spinner-overlay.component';
 
@@ -6,7 +6,7 @@ describe('SpinnerOverlayComponent', () => {
   let component: SpinnerOverlayComponent;
   let fixture: ComponentFixture<SpinnerOverlayComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SpinnerOverlayComponent ]
     })

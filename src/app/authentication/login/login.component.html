@@ -1,17 +1,30 @@
-<div class="login-container">
-  <h2>Admin Login</h2>
-  <mat-form-field>
-    <mat-label>Email</mat-label>
-    <input matInput type="text" [(ngModel)]="userEmail">
-  </mat-form-field><br>
-  <mat-form-field>
-    <mat-label>Password</mat-label>
-    <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="userPassword">
-    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </button>
-  </mat-form-field><br>
-  <button class="login" type="submit" (click)="login()" mat-raised-button>Login</button>
-  <br>
-  <p>{{error}}</p>
+<div class="authentication-container">
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm)">
+    <h2>Login</h2>
+    <mat-form-field >
+      <mat-label>Email</mat-label>
+      <input 
+        matInput 
+        id="email"
+        formControlName="email"
+        type="text">
+        <mat-error  *ngIf="loginForm.controls.email.hasError('required')">Email required!</mat-error>
+    </mat-form-field><br>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input 
+        id="password"
+        formControlName="password"
+        matInput [type]="hide ? 'password' : 'text'" >
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error  *ngIf="loginForm.controls.password.hasError('required')">Password required!</mat-error>
+    </mat-form-field><br>
+    <button class="login authentication-main-button" type="submit" mat-raised-button>Login</button><br>
+    <br>
+    <p>{{error}}</p>
+  </form>
+  <button class="create-account authentication-secondary-button" (click)="createAccount()" mat-raised-button>Create Account</button><br>
+  <button class="forgot-password authentication-secondary-button" (click)="forgotPassword()" mat-raised-button>Forgot Password</button>
 </div>

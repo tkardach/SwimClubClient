@@ -62,8 +62,20 @@ export class AuthenticationService {
     localStorage.removeItem(this.userInfoString);
   }
   
-  public validate(email, password) {
-    return this.http.post('/api/users/login', {'username' : email, 'password' : password}).toPromise()
+  public validate(email: string, password: string) {
+    return this.http.post('/api/users/login', {'username' : email, 'password' : password})
+  }
+  
+  public createAccount(email: string, password: string) {
+    return this.http.post('/api/users/signup', {'username' : email, 'password' : password})
+  }
+
+  public forgotPassword(email: string) {
+    return this.http.post('/api/users/forgot', {'email' : email})
+  }
+  
+  public resetPassword(password: string, token: string) {
+    return this.http.post('/api/users/reset/' + token, {'password' : password});
   }
   
   public logout() {

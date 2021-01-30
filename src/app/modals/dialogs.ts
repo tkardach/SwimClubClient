@@ -24,6 +24,24 @@ export class ConfirmationDialog {
     }
 }
 
+export interface MessageDialogData {
+  content: string
+}
+
+@Component({
+  selector: 'message-dialog',
+  templateUrl: './message/message-dialog.html',
+  styleUrls: ['./message/message-dialog.css']
+})
+export class MessageDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<MessageDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: MessageDialogData) {
+
+    }
+}
+
 @Component({
   selector: 'reservation-confirmation-dialog',
   templateUrl: './reservation-confirmation/reservation-confirmation-dialog.html',
