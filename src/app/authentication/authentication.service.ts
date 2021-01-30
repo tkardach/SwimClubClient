@@ -63,7 +63,7 @@ export class AuthenticationService {
   }
   
   public validate(email, password) {
-    return this.http.post('/api/users/login', {'username' : email, 'password' : password}).toPromise()
+    return this.http.post('/api/users/login', {'username' : email, 'password' : password})
   }
   
   public logout() {

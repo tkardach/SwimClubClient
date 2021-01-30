@@ -1,22 +1,39 @@
 <div class="login-container">
-  <h1 mat-dialog-title>Login</h1>
-  <div mat-dialog-content>
-    <mat-form-field>
-      <mat-label>Email</mat-label>
-      <input matInput type="text" [(ngModel)]="email">
-    </mat-form-field><br>
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password">
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-    </mat-form-field><br>
-  </div>
-  <div mat-dialog-actions align="center">
-    <button mat-button (click)="onLogin()">Login</button>
-    <button mat-button [mat-dialog-close]="false">Cancel</button>
-  </div>
-  <br>
-  <p>{{error}}</p>
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm)">
+    <h1 mat-dialog-title>Login</h1>
+    <div mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input 
+          matInput 
+          id="email"
+          formControlName="email"
+          type="text" >
+          <mat-error  *ngIf="loginForm.controls.email.hasError('required')">Email required!</mat-error>
+      </mat-form-field><br>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input 
+          matInput 
+          id="password"
+          formControlName="password"
+          [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error  *ngIf="loginForm.controls.password.hasError('required')">Password required!</mat-error>
+      </mat-form-field><br>
+    </div>
+    <div mat-dialog-actions align="center" class="login-action">
+      <button mat-button>Login</button>
+    </div>
+    <div mat-dialog-actions align="center">
+      <button mat-button>Create Account</button>
+    </div>
+    <div mat-dialog-actions align="center">
+      <button mat-button>Forgot Password</button>
+    </div>
+    <br>
+    <p>{{error}}</p>
+  </form>
 </div>

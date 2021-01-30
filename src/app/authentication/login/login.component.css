@@ -2,14 +2,28 @@
 .login-container {
   display: block;
   text-align: center;
+  margin: 40px auto;
 }
 .login-container mat-form-field {
   width: 250px;
 }
 
 
+
 .login {
   background-color: rgb(79, 182, 79);
+  color: white;
+  margin-bottom: 25px;
+}
+
+.create-account {
+  background-color: rgb(79, 153, 182);
+  color: white;
+  margin: 15px;
+}
+
+.forgot-password {
+  background-color: rgb(79, 153, 182);
   color: white;
   margin-bottom: 25px;
 }
