@@ -38,7 +38,7 @@ export interface CreateScheduleTimeslot {
   providedIn: SchedulesModule
 })
 export class SchedulesService {
-  private readonly _url = '/api/schedules/'
+  private readonly _url: string = environment.apiUrl + '/schedules/';
 
   headers: HttpHeaders = new HttpHeaders()
     .set('Content-Type', 'application/json');

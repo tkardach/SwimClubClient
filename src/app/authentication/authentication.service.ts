@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Event } from '../reservations/reservations.service';
+import { environment } from 'src/environments/environment';
 
 
 export interface UserInfo {
@@ -25,6 +26,7 @@ export interface UserProfile {
   providedIn: 'root'
 })
 export class AuthenticationService {
+  private readonly _url: string = environment.apiUrl + '/users/';
   private readonly userInfoString = 'userInfo';
 
   constructor(private http: HttpClient) { }
@@ -63,30 +65,30 @@ export class AuthenticationService {
   }
   
   public validate(email: string, password: string) {
-    return this.http.post('/api/users/login', {'username' : email, 'password' : password})
+    return this.http.post(`${this._url}/login`, {'username' : email, 'password' : password})
   }
   
   public createAccount(email: string, password: string) {
-    return this.http.post('/api/users/signup', {'username' : email, 'password' : password})
+    return this.http.post(`${this._url}/signup`, {'username' : email, 'password' : password})
   }
 
   public forgotPassword(email: string) {
-    return this.http.post('/api/users/forgot', {'email' : email})
+    return this.http.post(`${this._url}/forgot`, {'email' : email})
   }
   
   public resetPassword(password: string, token: string) {
-    return this.http.post('/api/users/reset/' + token, {'password' : password});
+    return this.http.post(`${this._url}/reset/` + token, {'password' : password});
   }
   
   public logout() {
-    return this.http.get('/api/users/logout', {responseType: 'text'}).toPromise()
+    return this.http.get(`${this._url}/logout`, {responseType: 'text'}).toPromise()
   }
 
   public userProfile() {
-    return this.http.get<UserProfile>('/api/users/me').toPromise()
+    return this.http.get<UserProfile>(`${this._url}/me`).toPromise()
   }
 
   public checkSession() {
-    return this.http.get<CheckSession>('/api/users/session').toPromise()
+    return this.http.get<CheckSession>(`${this._url}/session`).toPromise()
   }
 }
