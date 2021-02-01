@@ -1,11 +1,18 @@
+:host {
+  --eventheight: 50px;
+}
+
 .event {
-  display: table-cell;
+  position: relative;
   border-radius: 15px;
   width: 250px;
-  padding: 20px;
+  height: var(--eventheight);
+  line-height: var(--eventheight);
   cursor: pointer;
-  text-align: center;
+  text-align: left;
   vertical-align: middle;
+  overflow: hidden;
+  margin: 5px 0;
 }
 
 .family {
@@ -18,7 +25,33 @@
   color: white;
 }
 
+.event-info {
+  margin: 0;
+  float: left;
+  width: 200px;
+  padding-left: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .remove {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40px;
+  height: 100%;
   background-color: rgb(255, 43, 43);
   color: white;
+  text-align: center;
+}
+.remove:hover {
+  background-color: rgb(163, 39, 39);
+}
+.remove:active {
+  background-color: rgb(139, 35, 35);
+}
+
+.delete {
+  line-height: var(--eventheight);
 }

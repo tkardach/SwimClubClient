@@ -20,6 +20,7 @@ export class MakeReservationsComponent implements OnInit {
   selectedDate: Date;
   timeslots: Array<Timeslot>;
   loggedIn: boolean;
+  googleCalendarUrl: string;
 
   constructor(
     private _schedulesService: SchedulesService,
@@ -30,6 +31,11 @@ export class MakeReservationsComponent implements OnInit {
     }
 
   async ngOnInit(): Promise<void> {
+    this._reservationService.getReservationCalendarId().subscribe(
+      result => this.googleCalendarUrl = result,
+      error => console.log(error)
+    )
+    //"45hmspi6f6ur1i6h62et9tet08@group.calendar.google.com"
     await this.checkAuthenticated();
   }
 
@@ -39,13 +45,14 @@ export class MakeReservationsComponent implements OnInit {
 
   getTimeslotsForDate() {
     this.timeslots = [];
-    this._schedulesService.getTimeslotsForDate(this.selectedDate)
-      .then((result) => {
+    this._schedulesService.getTimeslotsForDate(this.selectedDate).subscribe(
+      (result) => {
         this.timeslots = result;
-      })
-      .catch((error) => {
+      },
+      (error) => {
         console.log(error);
-      })
+      }
+    )
   }
 
   onSelectedDateChange() {

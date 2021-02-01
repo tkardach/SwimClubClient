@@ -26,8 +26,8 @@ export class AllSchedulesComponent implements OnInit {
     public dialog: MatDialog) {
     }
 
-  async ngOnInit(): Promise<void> {
-    await this.init();
+  ngOnInit(): void {
+    this.init();
   }
 
   private sortSchedules(schedules: Array<Schedule>): Array<Schedule> {
@@ -45,16 +45,16 @@ export class AllSchedulesComponent implements OnInit {
 
   private async init(): Promise<void> {
     this._spinnerService.show();
-    this._schedulesService.getSchedules()
-      .then((response) => {
+    this._schedulesService.getSchedules().subscribe(
+      (response) => {
         this.schedules = response;
-      })
-      .catch((error) => {
+      },
+      (error) => {
         console.log(error)
-      })
-      .finally(() => {
+      }
+    ).add(() => {
         this._spinnerService.hide();
-      });
+    })
   }
 
   addTimeslot(index: number) {
@@ -70,12 +70,16 @@ export class AllSchedulesComponent implements OnInit {
 
   onSave(index: number) {
     const schedule = this.schedules[index];
-    this._schedulesService.putSchedule(schedule._id, schedule)
-      .then((result) => {
-      })
-      .catch((error) => {
+    this._spinnerService.show();
+    this._schedulesService.putSchedule(schedule._id, schedule).subscribe(
+      (result) => {
+      },
+      (error) => {
         console.log(error)
-      })
+      }
+    ).add(() => {
+      this._spinnerService.hide();
+    })
   }
 
   removeSchedule(index: number) {
@@ -91,13 +95,17 @@ export class AllSchedulesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this._schedulesService.deleteSchedule(this.schedules[index]._id)
-          .then((result) => {
+        this._spinnerService.show();
+        this._schedulesService.deleteSchedule(this.schedules[index]._id).subscribe(
+          (result) => {
             this.schedules.splice(index, 1);
-          })
-          .catch((error) => {
+          },
+          (error) => {
             console.log(error);
-          })
+          }
+        ).add(() => {
+          this._spinnerService.hide();
+        })
       }
     });
   }

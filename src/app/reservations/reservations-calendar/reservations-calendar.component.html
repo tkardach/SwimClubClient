@@ -1,5 +1,9 @@
 <div class="reservation-calendar">
-  <h2>Make a Reservation!</h2>
+  <div class="reservation-google-calendar-container">
+    <div [innerHTML]="googleCalendar" class="reservation-google-calendar">
+    </div>
+  </div>
+  <h2 class="reservation-calendar-title">Make a Reservation!</h2>
 
   <form name="reservationTypeForm" class="switch-field">
     <input class="family" id="family" type="radio" name="reservationType" value="family"

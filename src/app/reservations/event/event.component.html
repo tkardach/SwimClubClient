@@ -1,7 +1,8 @@
 <div 
     class="event" 
-    (mouseover)="hover=true"
-    (mouseleave)="hover=false"
-    [ngClass]="hover ? 'remove' : event.description==='family' ? 'family' : 'lap'">
-    {{hover ? "Remove" : contentString()}}
+    [ngClass]="event.description==='family' ? 'family' : 'lap'">
+    <p class="event-info">{{contentString()}}</p>
+    <div class="remove">
+        <mat-icon class="icon delete" (click)="onRemove()">delete_outline</mat-icon>
+    </div>
 </div>

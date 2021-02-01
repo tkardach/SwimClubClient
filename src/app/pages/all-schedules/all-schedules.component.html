@@ -4,3 +4,4 @@
 (removeSchedule)="removeSchedule($event)"
 (addTimeslot)="addTimeslot($event)">
 </app-schedule-list>
+<h1 class="no-schedules" *ngIf="schedules?.length === 0">No Schedules Currently Exist</h1>

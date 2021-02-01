@@ -78,18 +78,18 @@ export class EventsViewComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this._spinnerService.show();
-        this._reservationService.deleteReservation(id)
-          .then((message) => {
+        this._reservationService.deleteReservation(id).subscribe(
+          (message) => {
             console.log(message);
             this.showDeleteConfirmed("Reservation has been removed!");
-          })
-          .catch((error) => {
+          },
+          (error) => {
             console.log(error);
             this.showDeleteFailure(error.error.message)
-          })
-          .finally(() => {
-            this._spinnerService.hide();
-          });
+          }
+        ).add(() => {
+          this._spinnerService.hide();
+        })
       }
     });
   }

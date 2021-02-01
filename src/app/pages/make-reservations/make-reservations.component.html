@@ -1,4 +1,5 @@
 <app-reservations-calendar
+  [calendarUrl]="googleCalendarUrl"
   [(selectedDate)]="selectedDate"
   (selectedDateChange)="onSelectedDateChange()"
   [timeslots]="timeslots"

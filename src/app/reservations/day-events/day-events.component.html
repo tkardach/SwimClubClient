@@ -4,7 +4,7 @@
   <div *ngFor="let event of events; let index=index">
     <app-event 
       [event]="event"
-      (click)="onRemoveEvent(index)"
+      (remove)="onRemoveEvent(index)"
       ></app-event>
   </div>
 </div>

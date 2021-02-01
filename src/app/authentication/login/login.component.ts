@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
   }  
   
   onLogin(form: FormGroup) {
+    this.error = '';
     if (this.loginForm.invalid) return;
 
     this.authService.validate(form.value.email, form.value.password)
@@ -117,6 +118,7 @@ export class LoginDialog {
     }
 
   onLogin(form: FormGroup) {
+    this.error = '';
     if (this.loginForm.invalid) return;
 
     this.error = "";

@@ -46,11 +46,15 @@ export class ReservationsService {
 
   constructor(private http: HttpClient) { }
 
+  getReservationCalendarId() {
+    return this.http.get<any>(this._url + 'calendar-id', {headers: this.headers});
+  }
+
   postReservation(timeslot: PostTimeslot) {
     return this.http.post<any>(this._url, timeslot, {headers: this.headers, withCredentials: true});
   }
 
   deleteReservation(id: string) {
-    return this.http.delete<any>(this._url + id, {headers: this.headers, withCredentials: true}).toPromise();
+    return this.http.delete<any>(this._url + id, {headers: this.headers, withCredentials: true});
   }
 }

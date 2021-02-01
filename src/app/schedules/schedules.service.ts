@@ -48,11 +48,11 @@ export class SchedulesService {
   }
 
   getSchedules() {
-    return this.http.get<Array<Schedule>>(this._url, {headers: this.headers}).toPromise();
+    return this.http.get<Array<Schedule>>(this._url, {headers: this.headers, withCredentials: true});
   }
 
   postSchedule(schedule: Schedule) {
-    return this.http.post<any>(this._url, schedule, {headers: this.headers}).toPromise()
+    return this.http.post<any>(this._url, schedule, {headers: this.headers, withCredentials: true})
   }
 
   putSchedule(id: string, schedule: Schedule) {
@@ -61,18 +61,18 @@ export class SchedulesService {
       startDate: schedule.startDate,
       timeslots: schedule.timeslots.map(({_id, ...keepAttrs}) => keepAttrs)
     }
-    return this.http.put<Schedule>(this._url + id, putSchedule, {headers: this.headers}).toPromise()
+    return this.http.put<Schedule>(this._url + id, putSchedule, {headers: this.headers, withCredentials: true})
   }
 
   postScheduleArray(schedules: Array<CreateSchedule>) {
-    return this.http.post<any>(this._url + 'array', schedules, {headers: this.headers})
+    return this.http.post<any>(this._url + 'array', schedules, {headers: this.headers, withCredentials: true})
   }
 
   deleteSchedule(id: string) {
-    return this.http.delete<any>(this._url + id, {headers: this.headers}).toPromise()
+    return this.http.delete<any>(this._url + id, {headers: this.headers, withCredentials: true})
   }
 
   getTimeslotsForDate(date: Date) {
-    return this.http.get<Array<Timeslot>>(this._url + 'timeslots/' + date.getTime(), {headers: this.headers}).toPromise();
+    return this.http.get<Array<Timeslot>>(this._url + 'timeslots/' + date.getTime(), {headers: this.headers});
   }
 }
