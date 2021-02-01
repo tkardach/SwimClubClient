@@ -65,7 +65,7 @@ export class AuthenticationService {
   }
   
   public validate(email: string, password: string) {
-    return this.http.post(`${this._url}/login`, {'username' : email, 'password' : password})
+    return this.http.post(`${this._url}/login`, {'username' : email, 'password' : password}, {withCredentials: true})
   }
   
   public createAccount(email: string, password: string) {
@@ -81,14 +81,14 @@ export class AuthenticationService {
   }
   
   public logout() {
-    return this.http.get(`${this._url}/logout`, {responseType: 'text'}).toPromise()
+    return this.http.get(`${this._url}/logout`, {responseType: 'text', withCredentials: true}).toPromise()
   }
 
   public userProfile() {
-    return this.http.get<UserProfile>(`${this._url}/me`).toPromise()
+    return this.http.get<UserProfile>(`${this._url}/me`, {withCredentials: true}).toPromise()
   }
 
   public checkSession() {
-    return this.http.get<CheckSession>(`${this._url}/session`).toPromise()
+    return this.http.get<CheckSession>(`${this._url}/session`, {withCredentials: true}).toPromise()
   }
 }
