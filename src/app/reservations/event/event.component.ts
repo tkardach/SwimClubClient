@@ -23,7 +23,7 @@ export class EventComponent implements OnInit {
     }
     let start = new Date(this.event.start.dateTime);
     let end = new Date(this.event.end.dateTime);
-    return `${start.toLocaleTimeString()} to ${end.toLocaleTimeString()}`;
+    return `${start.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: true})} to ${end.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: true})}`;
   }
 
   onRemove() {
