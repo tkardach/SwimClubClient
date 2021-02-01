@@ -18,14 +18,14 @@
           id="password"
           formControlName="password"
           [type]="hide ? 'password' : 'text'">
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <button mat-icon-button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
         <mat-error  *ngIf="loginForm.controls.password.hasError('required')">Password required!</mat-error>
       </mat-form-field><br>
     </div>
     <div mat-dialog-actions align="center" class="auth-dialog-action login-action">
-      <button mat-button>Login</button>
+      <button mat-button type="submit">Login</button>
     </div>
     <div mat-dialog-actions align="center">
       <button mat-button (click)="onCreateAccount()">Create Account</button>
