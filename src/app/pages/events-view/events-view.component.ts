@@ -134,6 +134,8 @@ export class EventsViewComponent implements OnInit {
   }
 
   filterEventsByDay(events: Array<Event>): Array<Array<Event>> {
+    if (events.length === 0) return;
+    
     const minEvent = events.reduce((min, event) => {
       let start = new Date(event.start.dateTime);
       let minStart = new Date(min.start.dateTime);
