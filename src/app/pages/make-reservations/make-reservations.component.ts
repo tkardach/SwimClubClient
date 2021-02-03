@@ -10,6 +10,7 @@ import { SpinnerOverlayService } from 'src/app/shared/spinner-overlay.service';
 import { CreateAccountDialogData, CreateAccountDialog } from 'src/app/authentication/create-account/create-account.component';
 import { ForgotPasswordDialogData, ForgotPasswordDialog } from 'src/app/authentication/forgot-password/forgot-password.component';
 import { ReservationWorkflowService } from 'src/app/reservations/reservation-workflow.service';
+import { AuthenticationWorkflowService } from 'src/app/authentication/authentication-workflow.service';
 
 @Component({
   selector: 'app-make-reservations',
@@ -28,6 +29,7 @@ export class MakeReservationsComponent implements OnInit {
     private _schedulesService: SchedulesService,
     private _reservationService: ReservationsService,
     private _authenticationService: AuthenticationService,
+    private _authenticationWorkflow: AuthenticationWorkflowService,
     private _spinnerService: SpinnerOverlayService,
     private _reservationWorkflow: ReservationWorkflowService,
     public dialog: MatDialog) {
@@ -73,7 +75,8 @@ export class MakeReservationsComponent implements OnInit {
     await this.checkAuthenticated();
 
     if (!this.loggedIn) {
-      this.showLoginModal(timeslot);
+      this.showLoginModal(() => {this.onTimeslotClicked(timeslot)});
+      console.log('in here')
       return;
     }
 
@@ -103,6 +106,11 @@ export class MakeReservationsComponent implements OnInit {
   }
 
   showManageEventsModal() {
+    if (!this.loggedIn) {
+      this.showLoginModal(() => {this.showManageEventsModal()});
+      return;
+    }
+
     this._spinnerService.show();
     this._authenticationService.userProfile().subscribe(
       (result: UserProfile) => {
@@ -127,121 +135,14 @@ export class MakeReservationsComponent implements OnInit {
     )
   }
 
-  confirmDeleteEvent(id: string, data: ConfirmationDialogData) {
-
-    const dialogRef = this.dialog.open(ConfirmationDialog, {
-      data: data
-    });
-
-    dialogRef.afterClosed().subscribe((result: boolean) => {
-      if (result) {
-        this._spinnerService.show();
-        this._reservationService.deleteReservation(id).subscribe(
-          (message) => {
-            console.log(message);
-            this.showDeleteConfirmed("Reservation has been removed!");
-          },
-          (error) => {
-            console.log(error);
-            this.showDeleteFailure(error.error.message)
-          }
-        ).add(() => {
-          this._spinnerService.hide();
-        })
-      }
-    });
-  }
-
-  showDeleteConfirmed(message: string) {
-    const data: ConfirmationDialogData = {
-      title: 'Reservation Deleted!',
-      content: message,
-      confirmText: 'Ok',
-      closeText: 'Close',
-      showClose: false
-    }
-
-    const dialogRef = this.dialog.open(ConfirmationDialog, {
-      data: data
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
-      window.location.reload();
-    }) 
-  }
-
-  showDeleteFailure(message: string) {
-    const data: ConfirmationDialogData = {
-      title: 'Reservation was not removed!',
-      content: message,
-      confirmText: 'Ok',
-      closeText: 'Close',
-      showClose: false
-    }
-
-    this.dialog.open(ConfirmationDialog, {
-      data: data
-    });
-  }
-
-  showLoginModal(timeslot: Timeslot) {
-    const data: LoginDialogData = {
-      loginService: this._authenticationService
-    }
-    const dialogRef = this.dialog.open(LoginDialog, {
-      data: data
-    });
-
-    dialogRef.componentInstance.forgotPassword.subscribe(
-      () => {
-        dialogRef.close();
-
-        const data: ForgotPasswordDialogData = {
-          authService: this._authenticationService
-        }
-        const forgotPasswordDialog = this.dialog.open(ForgotPasswordDialog, {
-          data: data
-        });
-
-        forgotPasswordDialog.afterClosed().subscribe(
-          result => {
-            if (result) {
-              const messageData: MessageDialogData = {content: 'Password reset email has been sent'}
-              this.dialog.open(MessageDialog, {data: messageData});
-            }
-          }
-        )
-      }
-    )
-
-    dialogRef.componentInstance.createAccount.subscribe(
-      () => {
-        dialogRef.close();
-
-        const data: CreateAccountDialogData = {
-          authService: this._authenticationService
-        }
-        const createAccountDialog = this.dialog.open(CreateAccountDialog, {
-          data: data
-        });
-
-        createAccountDialog.afterClosed().subscribe(
-          async result => {
-            if (result) {
-              await this.checkAuthenticated();
-              this.onTimeslotClicked(timeslot);
-            }
-          }
-        )
-      }
-    )
-
-    dialogRef.afterClosed().subscribe(async (result: boolean) => {
-      if (result) {
+  showLoginModal(callback: Function) {
+    this._authenticationWorkflow.workflowDone.subscribe(
+      async result => {
         await this.checkAuthenticated();
-        this.onTimeslotClicked(timeslot);
+        if (callback) callback();
       }
-    });
+    )
+    this._authenticationWorkflow.showLoginModal();
   }
 
   confirmFamilyReservation(postTimeslot: PostTimeslot, data: ConfirmationDialogData) {
