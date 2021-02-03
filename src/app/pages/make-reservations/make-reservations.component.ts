@@ -75,8 +75,12 @@ export class MakeReservationsComponent implements OnInit {
     await this.checkAuthenticated();
 
     if (!this.loggedIn) {
-      this.showLoginModal(() => {this.onTimeslotClicked(timeslot)});
-      console.log('in here')
+      const showTimeslot = () => {
+        this.onTimeslotClicked(timeslot);
+        this._authenticationWorkflow.removeAfterLoginCallback(showTimeslot);
+      }
+      this._authenticationWorkflow.addAfterLoginCallback(showTimeslot);
+      this._authenticationWorkflow.showLoginModal();
       return;
     }
 
@@ -105,9 +109,16 @@ export class MakeReservationsComponent implements OnInit {
       this.confirmLapReservation(postTimeslot, data);
   }
 
-  showManageEventsModal() {
+  async showManageEventsModal() {
+    await this.checkAuthenticated();
+
     if (!this.loggedIn) {
-      this.showLoginModal(() => {this.showManageEventsModal()});
+      const showManageEvents = () => {
+        this.showManageEventsModal();
+        this._authenticationWorkflow.removeAfterLoginCallback(showManageEvents);
+      }
+      this._authenticationWorkflow.addAfterLoginCallback(showManageEvents);
+      this._authenticationWorkflow.showLoginModal();
       return;
     }
 
@@ -133,16 +144,6 @@ export class MakeReservationsComponent implements OnInit {
         this._spinnerService.hide();
       }
     )
-  }
-
-  showLoginModal(callback: Function) {
-    this._authenticationWorkflow.workflowDone.subscribe(
-      async result => {
-        await this.checkAuthenticated();
-        if (callback) callback();
-      }
-    )
-    this._authenticationWorkflow.showLoginModal();
   }
 
   confirmFamilyReservation(postTimeslot: PostTimeslot, data: ConfirmationDialogData) {

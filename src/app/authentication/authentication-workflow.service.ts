@@ -10,9 +10,10 @@ import { LoginDialog, LoginDialogData } from './login/login.component';
   providedIn: 'root'
 })
 export class AuthenticationWorkflowService {
-  loggedIn: boolean;
-
   @Output() workflowDone = new EventEmitter();
+
+  loggedIn: boolean;
+  afterLoginCallbacks = {};
 
   constructor(
     private _authenticationService: AuthenticationService,
@@ -21,6 +22,21 @@ export class AuthenticationWorkflowService {
 
   async checkAuthenticated() {
     this.loggedIn = await this._authenticationService.isAuthenticated();
+  }
+
+  addAfterLoginCallback(func: Function) {
+    this.afterLoginCallbacks[func.name] = func;
+  }
+
+  removeAfterLoginCallback(func: Function) {
+    if (this.afterLoginCallbacks[func.name])
+      delete this.afterLoginCallbacks[func.name]
+  }
+
+  invokeCallbacks() {
+    Object.values(this.afterLoginCallbacks).forEach(func => {
+      if (func instanceof Function) func();
+    })
   }
   
   showLoginModal() {
@@ -31,6 +47,7 @@ export class AuthenticationWorkflowService {
       data: data
     });
 
+    // subscribe to forgot password workflow
     dialogRef.componentInstance.forgotPassword.subscribe(
       () => {
         dialogRef.close();
@@ -53,6 +70,7 @@ export class AuthenticationWorkflowService {
       }
     )
 
+    // subscribe to create account workflow
     dialogRef.componentInstance.createAccount.subscribe(
       () => {
         dialogRef.close();
@@ -66,14 +84,17 @@ export class AuthenticationWorkflowService {
 
         createAccountDialog.afterClosed().subscribe(
           result => {
-            this.workflowDone.emit();
+            if (result) 
+              this.invokeCallbacks();
           }
         )
       }
     )
 
+    // login dialog closed
     dialogRef.afterClosed().subscribe(async (result: boolean) => {
-      this.workflowDone.emit();
+      if (result) 
+        this.invokeCallbacks();
     });
   }
 }

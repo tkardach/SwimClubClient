@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
     this.authService.logout()
       .then(() => {
         this.authService.unsetUserInfo();
-        this.router.navigate(['/login']);
+        window.location.reload();
       });
   }
 
