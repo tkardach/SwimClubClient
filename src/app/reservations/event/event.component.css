@@ -44,6 +44,9 @@
   background-color: rgb(255, 43, 43);
   color: white;
   text-align: center;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .remove:hover {
   background-color: rgb(163, 39, 39);

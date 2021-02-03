@@ -1,0 +1,12 @@
+<div class="event-view-dialog-content">
+  <h1 mat-dialog-title>Event List</h1>
+  <div mat-dialog-content>
+    <div *ngFor="let day of sortedDays; let index=index">
+      <p class="text-color">{{getDateString(day[0])}}</p> 
+      <app-event *ngFor="let event of day[1]"
+        [event]="event"
+        (remove)="onDelete(event)">
+      </app-event>
+    </div>
+  </div>
+</div>

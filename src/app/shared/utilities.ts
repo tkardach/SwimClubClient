@@ -1,6 +1,6 @@
-export function compareDate(date1: Date, date2: Date) {
+export function compareDate(date1: Date, date2: Date): number {
   if (!(date1 instanceof Date) || !(date2 instanceof Date))
-    return false;
+    return NaN;
 
   let date = new Date(date1);
   let comp = new Date(date2);
@@ -10,6 +10,10 @@ export function compareDate(date1: Date, date2: Date) {
   if (date < comp) return -1;
   else if (date > comp) return 1;
   else return 0;
+}
+
+export function getDateString(date: Date) {
+  return `${date.getMonth()+1}-${date.getDate()}-${date.getFullYear()}`
 }
 
 export function dateDiffDays(date1: Date, date2: Date) {
@@ -54,4 +58,17 @@ export function weekdayToString(day: number) {
     case 5: return 'Friday';
     case 6: return 'Saturday';
   }
+}
+
+/**
+ * Groups array by the given key
+ * @param arr initial array
+ * @param key sorting key or sorting function
+ */
+export function groupBy(arr, key) {
+  return arr.reduce(function(acc, current) { 
+    let newKey = key instanceof Function ? key(current) : current[key];
+    (acc[newKey] = acc[newKey] || []).push(current);
+    return acc; 
+  }, {});
 }

@@ -3,5 +3,6 @@
   [(selectedDate)]="selectedDate"
   (selectedDateChange)="onSelectedDateChange()"
   [timeslots]="timeslots"
-  (timeslotClicked)="onTimeslotClicked($event)">
+  (timeslotClicked)="onTimeslotClicked($event)"
+  (manageEventsClicked)="showManageEventsModal()">
 </app-reservations-calendar>

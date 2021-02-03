@@ -1,0 +1,11 @@
+
+button:focus, button:active:focus, button.active:focus {
+  outline: 0 !important;
+  outline-style: none !important;
+  border: none !important;
+}
+
+.event-view-dialog-content {
+  text-align: center;
+  padding: 25px;
+}

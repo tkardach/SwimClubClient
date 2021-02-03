@@ -19,6 +19,22 @@
   top: 0;
 }
 
+.reservation-calendar-manage-events {
+  width: 100%;
+  background-color: #e4e4e4;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+  text-align: center;
+  padding: 8px 16px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 20px 0;
+  border-radius: 5px;
+  transition: all 0.1s ease-in-out;
+}
+.reservation-calendar-manage-events:hover {
+  background-color: #c4c4c4;
+}
+
 .hidden {
   display: none;
 }
@@ -78,6 +94,11 @@ color: white;
 
 .switch-field label:last-of-type {
   border-radius: 0 4px 4px 0;
+}
+button:focus, button:active:focus, button.active:focus {
+  outline: 0 !important;
+  outline-style: none !important;
+  border: none !important;
 }
 
 @media (max-width: 350px) {

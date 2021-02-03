@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HoverOverDirective } from './hover-over.directive';
 import { SpinnerOverlayComponent } from './spinner-overlay/spinner-overlay.component';
 import { MaterialModule } from '../material/material.module';
 
@@ -8,7 +7,6 @@ import { MaterialModule } from '../material/material.module';
 
 @NgModule({
   declarations: [
-    HoverOverDirective,
     SpinnerOverlayComponent
   ],
   imports: [
@@ -16,7 +14,6 @@ import { MaterialModule } from '../material/material.module';
     MaterialModule
   ],
   exports: [
-    HoverOverDirective,
     SpinnerOverlayComponent
   ]
 })

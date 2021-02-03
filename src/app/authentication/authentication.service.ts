@@ -85,7 +85,7 @@ export class AuthenticationService {
   }
 
   public userProfile() {
-    return this.http.get<UserProfile>(`${this._url}/me`, {withCredentials: true}).toPromise()
+    return this.http.get<UserProfile>(`${this._url}/me`, {withCredentials: true})
   }
 
   public checkSession() {

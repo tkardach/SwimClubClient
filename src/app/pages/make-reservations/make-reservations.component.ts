@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { SchedulesService } from 'src/app/schedules/schedules.service';
 import { Timeslot, ReservationsService, PostTimeslot, Event } from 'src/app/reservations/reservations.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ConfirmationDialog, ReservationConfirmationDialog, ConfirmationDialogData, MessageDialog, MessageDialogData } from 'src/app/modals/dialogs';
+import { ConfirmationDialog, ReservationConfirmationDialog, ConfirmationDialogData, MessageDialog, MessageDialogData, EventViewDialogData, EventViewDialog } from 'src/app/modals/dialogs';
 import { militaryTimeToString } from '../../shared/utilities';
-import { AuthenticationService } from 'src/app/authentication/authentication.service';
+import { AuthenticationService, UserProfile } from 'src/app/authentication/authentication.service';
 import { LoginDialog, LoginDialogData } from 'src/app/authentication/login/login.component';
 import { SpinnerOverlayService } from 'src/app/shared/spinner-overlay.service';
 import { CreateAccountDialogData, CreateAccountDialog } from 'src/app/authentication/create-account/create-account.component';
 import { ForgotPasswordDialogData, ForgotPasswordDialog } from 'src/app/authentication/forgot-password/forgot-password.component';
+import { ReservationWorkflowService } from 'src/app/reservations/reservation-workflow.service';
 
 @Component({
   selector: 'app-make-reservations',
@@ -21,12 +22,14 @@ export class MakeReservationsComponent implements OnInit {
   timeslots: Array<Timeslot>;
   loggedIn: boolean;
   googleCalendarUrl: string;
+  manageEventsDialog: MatDialogRef<EventViewDialog>;
 
   constructor(
     private _schedulesService: SchedulesService,
     private _reservationService: ReservationsService,
     private _authenticationService: AuthenticationService,
     private _spinnerService: SpinnerOverlayService,
+    private _reservationWorkflow: ReservationWorkflowService,
     public dialog: MatDialog) {
     }
 
@@ -35,7 +38,14 @@ export class MakeReservationsComponent implements OnInit {
       result => this.googleCalendarUrl = result,
       error => console.log(error)
     )
-    //"45hmspi6f6ur1i6h62et9tet08@group.calendar.google.com"
+    this._reservationWorkflow.reservationDeleted.subscribe(
+      done => {
+        if (this.manageEventsDialog) {
+          this.manageEventsDialog.close();
+          this.showManageEventsModal();
+        }
+      }
+    )
     await this.checkAuthenticated();
   }
 
@@ -90,6 +100,88 @@ export class MakeReservationsComponent implements OnInit {
       this.confirmFamilyReservation(postTimeslot, data);
     else
       this.confirmLapReservation(postTimeslot, data);
+  }
+
+  showManageEventsModal() {
+    this._spinnerService.show();
+    this._authenticationService.userProfile().subscribe(
+      (result: UserProfile) => {
+        this._spinnerService.hide();
+        const data: EventViewDialogData = {
+          events: result.events
+        }
+        this.manageEventsDialog = this.dialog.open(EventViewDialog, {
+          data: data,
+          height: '50%'
+        });
+
+        this.manageEventsDialog.componentInstance.deleteEvent.subscribe(
+          (event: Event) => {
+            this._reservationWorkflow.onEventRemoved(event);
+          }
+        )
+      },
+      (error) => {
+        this._spinnerService.hide();
+      }
+    )
+  }
+
+  confirmDeleteEvent(id: string, data: ConfirmationDialogData) {
+
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this._spinnerService.show();
+        this._reservationService.deleteReservation(id).subscribe(
+          (message) => {
+            console.log(message);
+            this.showDeleteConfirmed("Reservation has been removed!");
+          },
+          (error) => {
+            console.log(error);
+            this.showDeleteFailure(error.error.message)
+          }
+        ).add(() => {
+          this._spinnerService.hide();
+        })
+      }
+    });
+  }
+
+  showDeleteConfirmed(message: string) {
+    const data: ConfirmationDialogData = {
+      title: 'Reservation Deleted!',
+      content: message,
+      confirmText: 'Ok',
+      closeText: 'Close',
+      showClose: false
+    }
+
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      window.location.reload();
+    }) 
+  }
+
+  showDeleteFailure(message: string) {
+    const data: ConfirmationDialogData = {
+      title: 'Reservation was not removed!',
+      content: message,
+      confirmText: 'Ok',
+      closeText: 'Close',
+      showClose: false
+    }
+
+    this.dialog.open(ConfirmationDialog, {
+      data: data
+    });
   }
 
   showLoginModal(timeslot: Timeslot) {

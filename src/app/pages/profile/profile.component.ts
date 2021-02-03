@@ -16,14 +16,16 @@ export class ProfileComponent implements OnInit {
     ) 
   { 
     this._spinnerService.show();
-    this._authenticationService.userProfile()
-      .then((profile: UserProfile) => {
+    this._authenticationService.userProfile().subscribe(
+      (profile: UserProfile) => {
         this.userProfile = profile;
-      })
-      .catch((error) => {
+      },
+      (error) => {
         console.log(error);
-      })
-      .finally(() => {this._spinnerService.hide();});
+      }
+    ).add(
+      () => {this._spinnerService.hide();}
+    )
   }
 
   ngOnInit(): void {

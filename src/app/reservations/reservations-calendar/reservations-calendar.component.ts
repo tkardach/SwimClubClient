@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Timeslot } from '../reservations.service';
 import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
+import { EventHandlerVars } from '@angular/compiler/src/compiler_util/expression_converter';
 
 @Component({
   selector: 'app-reservations-calendar',
@@ -13,6 +14,8 @@ export class ReservationsCalendarComponent implements OnInit {
 
   @Input() timeslots: Array<Timeslot> = [];
   @Output() timeslotClicked = new EventEmitter<Timeslot>();
+
+  @Output() manageEventsClicked = new EventEmitter();
 
   private _calendarUrl: string;
   @Input() set calendarUrl(url: string) {
@@ -55,5 +58,9 @@ export class ReservationsCalendarComponent implements OnInit {
   }
 
   onChecked() {
+  }
+
+  onManageEvents() {
+    this.manageEventsClicked.emit();
   }
 }
