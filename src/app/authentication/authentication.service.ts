@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Event } from '../reservations/reservations.service';
 import { environment } from 'src/environments/environment';
+import { throwError, pipe } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 export interface UserInfo {
@@ -66,6 +68,16 @@ export class AuthenticationService {
   
   public validate(email: string, password: string) {
     return this.http.post(`${this._url}/login`, {'username' : email, 'password' : password}, {withCredentials: true})
+      .pipe(
+        map(
+          response => {
+            this.setUserInfo({
+              email: response['email'],
+              admin: response['isAdmin']
+            });
+            return response;
+          })
+      )
   }
   
   public createAccount(email: string, password: string) {
@@ -81,7 +93,13 @@ export class AuthenticationService {
   }
   
   public logout() {
-    return this.http.get(`${this._url}/logout`, {responseType: 'text', withCredentials: true}).toPromise()
+    return this.http.get(`${this._url}/logout`, {responseType: 'text', withCredentials: true})
+      .pipe(
+        map(response => {
+          this.unsetUserInfo();
+          return response
+        })
+      )
   }
 
   public userProfile() {

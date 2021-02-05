@@ -26,8 +26,7 @@ export class HeaderComponent implements OnInit {
 
   logout(): void {
     this.authService.logout()
-      .then(() => {
-        this.authService.unsetUserInfo();
+      .subscribe(() => {
         window.location.reload();
       });
   }

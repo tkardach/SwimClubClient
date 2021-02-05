@@ -42,10 +42,6 @@ export class CreateAccountComponent implements OnInit {
 
     this.authService.createAccount(formGroup.value.email, formGroup.value.password).subscribe(
       response => {
-        this.authService.setUserInfo({
-          email: response['email'],
-          admin: response['isAdmin']
-        });
         this.router.navigate(['/make-reservations']);
       },
       error => {
@@ -103,10 +99,6 @@ export class CreateAccountDialog {
 
     this._service.createAccount(formGroup.value.email, formGroup.value.password).subscribe(
       response => {
-        this._service.setUserInfo({
-          email: response['email'],
-          admin: response['isAdmin']
-        });
         this.dialogRef.close(true)
       },
       error => this.error = error.error.message

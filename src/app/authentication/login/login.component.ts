@@ -56,10 +56,6 @@ export class LoginComponent implements OnInit {
     this.authService.validate(form.value.email, form.value.password)
       .subscribe(
         response => {
-          this.authService.setUserInfo({
-            email: response['email'],
-            admin: response['isAdmin']
-          });
           if (this.desiredRoute)
             this.router.navigate([this.desiredRoute])
           else
@@ -124,10 +120,6 @@ export class LoginDialog {
     this.error = "";
     this._service.validate(form.value.email, form.value.password).subscribe(
       response => {
-        this._service.setUserInfo({
-          email: response['email'],
-          admin: response['isAdmin']
-        });
         this.dialogRef.close(true);
       },
       error => {
