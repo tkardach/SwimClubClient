@@ -18,9 +18,9 @@ const routes: Routes = [
   {path: 'create-account', component: CreateAccountComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'reset-password/:token', component: ResetPasswordComponent},
-  {path: '', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'schedules', component: AllSchedulesComponent, canActivate: [AuthGuard]},
   {path: 'create-schedule', component: CreateSchedulePageComponent, canActivate: [AuthGuard]},
+  {path: '', component: MakeReservationsComponent},
   {path: 'make-reservations', component: MakeReservationsComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
 ];
