@@ -6,7 +6,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item active" data-toggle="collapse" data-target=".navbar-collapse.show">
         <a class="nav-link" routerLink="">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown" [class.hide]="!isAdmin()">
@@ -14,8 +14,8 @@
           Schedules
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" routerLink="schedules">View Schedules</a>
-          <a class="dropdown-item" routerLink="create-schedule">Create Schedules</a>
+          <a class="dropdown-item" routerLink="schedules" data-toggle="collapse" data-target=".navbar-collapse.show">View Schedules</a>
+          <a class="dropdown-item" routerLink="create-schedule" data-toggle="collapse" data-target=".navbar-collapse.show">Create Schedules</a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -23,25 +23,25 @@
           Reservations
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" routerLink="profile">View My Reservations</a>
-          <a class="dropdown-item" routerLink="make-reservations">Make Reservations</a>
+          <a class="dropdown-item" routerLink="profile" data-toggle="collapse" data-target=".navbar-collapse.show">View My Reservations</a>
+          <a class="dropdown-item" routerLink="make-reservations" data-toggle="collapse" data-target=".navbar-collapse.show">Make Reservations</a>
         </div>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item user-logged-out navbar-right" [class.hide]="loggedIn()">
+      <li class="nav-item user-logged-out navbar-right" [class.hide]="loggedIn()" data-toggle="collapse" data-target=".navbar-collapse.show">
         <a class="nav-link" routerLink="login">Login</a>
       </li>
-      <li class="nav-item user-logged-out navbar-right" [class.hide]="loggedIn()">
+      <li class="nav-item user-logged-out navbar-right" [class.hide]="loggedIn()" data-toggle="collapse" data-target=".navbar-collapse.show">
         <a class="nav-link" routerLink="create-account">Create Account</a>
       </li>
-      <li class="nav-item user-logged-out navbar-right" [class.hide]="loggedIn()">
+      <li class="nav-item user-logged-out navbar-right" [class.hide]="loggedIn()" data-toggle="collapse" data-target=".navbar-collapse.show">
         <a class="nav-link" routerLink="forgot-password">Forgot Password</a>
       </li>
-      <li class="nav-item user-logged-in navbar-right" [class.hide]="!loggedIn()">
+      <li class="nav-item user-logged-in navbar-right" [class.hide]="!loggedIn()" data-toggle="collapse" data-target=".navbar-collapse.show">
         <a class="nav-link" routerLink="profile">My Account</a>
       </li>
-      <li class="nav-item user-logged-in navbar-right" [class.hide]="!loggedIn()">
+      <li class="nav-item user-logged-in navbar-right" [class.hide]="!loggedIn()" data-toggle="collapse" data-target=".navbar-collapse.show">
         <a class="nav-link" (click)="logout()">Logout</a>
       </li>
     </ul>
