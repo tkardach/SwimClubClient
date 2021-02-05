@@ -19,7 +19,7 @@
     <label for="lap">Lap Swimming</label>
   </form>
   
-  <mat-calendar [selected]="selectedDate" (selectedChange)="onSelect($event)"></mat-calendar>
+  <mat-calendar [ngClass]="familySwimming" [selected]="selectedDate" (selectedChange)="onSelect($event)"></mat-calendar>
   <div class="timeslots" *ngFor="let timeslot of timeslots; let index = index">
     <app-timeslot 
       (click)="onTimeslotClicked(index)" 
