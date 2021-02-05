@@ -20,10 +20,8 @@ h2 {
 .family .mat-calendar-body-selected {
   background-color: #00AFF3;
   color: white;
-  transition: background-color 0.5s;
 }
 .lap .mat-calendar-body-selected {
   background-color: #FF9300;
   color: white;
-  transition: background-color 0.5s;
 }
