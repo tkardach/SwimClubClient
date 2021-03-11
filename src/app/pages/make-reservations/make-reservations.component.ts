@@ -72,6 +72,8 @@ export class MakeReservationsComponent implements OnInit {
   }
 
   async onTimeslotClicked(timeslot: Timeslot) {
+    if (!timeslot.vacant) return;
+    
     await this.checkAuthenticated();
 
     if (!this.loggedIn) {
