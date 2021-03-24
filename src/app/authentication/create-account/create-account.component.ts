@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationService } from '../authentication.service';
 import { Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SpinnerOverlayService } from 'src/app/shared/spinner-overlay.service';
 
 @Component({
   selector: 'app-create-account',
@@ -23,7 +24,8 @@ export class CreateAccountComponent implements OnInit {
 
   constructor(
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private _spinnerService: SpinnerOverlayService
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +42,7 @@ export class CreateAccountComponent implements OnInit {
   onCreateAccount(formGroup: FormGroup) {
     if (this.createAccountForm.invalid) return;
 
+    this._spinnerService.show();
     this.authService.createAccount(formGroup.value.email, formGroup.value.password).subscribe(
       response => {
         this.router.navigate(['/make-reservations']);
@@ -48,7 +51,9 @@ export class CreateAccountComponent implements OnInit {
         console.log(error);
         this.error = error.error.message;
       }
-    )
+    ).add(() => {
+      this._spinnerService.hide();
+  })
   }
 
   onForgotPassword() {
