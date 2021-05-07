@@ -81,7 +81,7 @@ export class AuthenticationService {
   }
   
   public createAccount(email: string, password: string) {
-    return this.http.post(`${this._url}/signup`, {'username' : email, 'password' : password, withCredentials: true})
+    return this.http.post(`${this._url}/signup`, {'username' : email, 'password' : password}, {withCredentials: true})
   }
 
   public forgotPassword(email: string) {
