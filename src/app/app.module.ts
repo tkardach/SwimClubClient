@@ -17,6 +17,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { AuthGuard } from './authentication/authentication.guard';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { PagesModule } from './pages/pages.module';
+import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { PagesModule } from './pages/pages.module';
     FormsModule,
     AuthenticationModule,
     PagesModule,
+    ProfileModule,
     MatDialogModule
   ],
   providers: [

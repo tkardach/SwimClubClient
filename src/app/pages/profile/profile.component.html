@@ -1,5 +1,9 @@
 <div class="event-container">
   <h1 *ngIf="userProfile">Welcome {{userProfile?.user.lastName}} Family!</h1>
+  <h2>Account Dues</h2>
+  <div class="account-balance">
+    <app-account-balance [profile]="userProfile"></app-account-balance>
+  </div>
   <h2>Upcoming Reservations</h2>
   <app-events-view
   [events]="userProfile?.events">

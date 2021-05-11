@@ -2,3 +2,8 @@
   margin: 20px;
   text-align: center;
 }
+
+.account-balance {
+  display: inline-block;
+  margin: auto;
+}

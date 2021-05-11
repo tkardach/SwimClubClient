@@ -1,0 +1,30 @@
+
+td, th {
+  text-align: left;
+  vertical-align: middle;
+  padding: 8px;
+}
+
+h5 {
+  margin: 0;
+}
+
+.amount-td {
+  text-align: right;
+  color: rgb(255, 43, 43);
+}
+
+.amount-td-positive {
+  text-align: right;
+  color: rgb(47, 206, 47);
+}
+
+hr {
+  margin: 8px 0;
+}
+
+@media (min-width: 650px) {
+  .amount-td {
+    padding-left: 50px;
+  }
+}

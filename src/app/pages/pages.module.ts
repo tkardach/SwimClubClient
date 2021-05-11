@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { EventsViewComponent } from './events-view/events-view.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProfileModule } from '../profile/profile.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ProfileComponent } from './profile/profile.component';
     FormsModule,
     ReservationsModule,
     AuthenticationModule,
-    SharedModule
+    SharedModule,
+    ProfileModule
   ],
   exports: [
     AllSchedulesComponent,

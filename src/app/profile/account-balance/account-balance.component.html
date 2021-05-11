@@ -1,0 +1,19 @@
+<div>
+  <table>
+    <tr *ngFor="let fee of feesArray">
+      <td><h5>{{fee.name}}</h5></td>
+      <td class="amount-td">{{fee.amount}}</td>
+    </tr>
+    <tr *ngIf="this.totalFeesOwed">
+      <td colspan="2"><hr></td>
+    </tr>
+    <tr *ngIf="this.totalFeesOwed">
+      <td><h5>Total Owed</h5></td>
+      <td class="amount-td">{{totalFeesOwed}}</td>
+    </tr>
+    <tr *ngIf="!this.totalFeesOwed">
+      <td><h5>Total Owed</h5></td>
+      <td class="amount-td-positive">$0</td>
+    </tr>
+  </table>
+</div>

@@ -16,12 +16,31 @@ export interface CheckSession {
   user: UserInfo
 }
 
+export interface FeePair {
+  name: String,
+  amount: number
+}
+
+export interface Fees {
+  totalOwed: string,
+  startupFee: string,
+  equityShare: string,
+  unpaidCarryOver: string,
+  membershipDues: string,
+  lateFee: string,
+  workdayFee: string,
+  guestFee: string,
+  nannyFee: string,
+  assessmentFee: string
+}
+
 export interface UserProfile {
   user: {
     lastName: string,
     certificateNumber: string
   },
-  events: Array<Event>
+  events: Array<Event>,
+  fees: Fees
 }
 
 @Injectable({
@@ -32,6 +51,27 @@ export class AuthenticationService {
   private readonly userInfoString = 'userInfo';
 
   constructor(private http: HttpClient) { }
+
+  public convertFeesToArray(fees: Fees) : Array<FeePair> {
+    const feesArray : Array<FeePair> = [];
+
+    for (var prop in fees) {
+      if (Object.prototype.hasOwnProperty.call(fees, prop)) {
+        if (!fees[prop]) continue;
+
+        let sentenceProp = prop;
+        let result = sentenceProp.replace( /([A-Z])/g, " $1" );
+        let finalResult = result.charAt(0).toUpperCase() + result.slice(1);
+
+        feesArray.push({
+          name: finalResult,
+          amount: fees[prop]
+        });
+      }
+    }
+
+    return feesArray;
+  }
 
   public async isAuthenticated() : Promise<boolean> {
     try {
